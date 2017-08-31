@@ -6,9 +6,13 @@
     "authors": [
         {
             "name": "Gean Geowle",
-            "email": "geangeowle@gmail.com"
+            "email": "geangeowle@gmail.com",
+            "role": "Developer"
         }
     ],
-    "minimum-stability": "stable",
-    "require": {}
+    "minimum-stability": "dev-master",
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^6.3"
+    }
 }
