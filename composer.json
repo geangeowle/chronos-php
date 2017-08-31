@@ -1,0 +1,14 @@
+{
+    "name": "geangeowle/chronos-php",
+    "description": "Very Small Lite Framework for PHP",
+    "type": "library",
+    "license": "GPL",
+    "authors": [
+        {
+            "name": "Gean Geowle",
+            "email": "geangeowle@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
