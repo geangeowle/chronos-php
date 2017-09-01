@@ -1,0 +1,21 @@
+version: '2'
+services:
+  server-php56:
+    image: php:5.6-apache
+    volumes:
+      - .:/var/www/html/
+    ports:
+      - "8056:80"
+    networks:
+      - sdnet
+  server-php71:
+    image: php:7.1-apache
+    volumes:
+      - .:/var/www/html/
+    ports:
+      - "8071:80"
+    networks:
+      - sdnet
+networks:
+  sdnet:
+    driver: "bridge"
