@@ -8,11 +8,14 @@
             "name": "Gean Geowle",
             "email": "geangeowle@gmail.com",
             "role": "Developer"
+        },
+        {
+            "name": "Jônatan Flôres",
+            "email": "jonatafloress@gmail.com",
+            "role": "Developer"
         }
     ],
     "require": {
-      "php": ">=5.6"
-    },
-    "version": "0.0.1",
-    "minimum-stability": "dev"
+      "php": ">=5.3.3"
+    }
 }
