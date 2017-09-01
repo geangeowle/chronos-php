@@ -1,10 +1,11 @@
 <?php
-
 namespace Chronos;
+
+use Chronos\Base\Dispatcher;
 
 //use .....
 
-class Chronos
+final class Chronos
 {
   private static $instance = null;
   public static function getInstance()
@@ -17,6 +18,8 @@ class Chronos
 
   public static function run()
   {
+    $objDispatcher = new Dispatcher();
+    $objDispatcher->dispatch();
     die("<h1>It's a live!</h1>");
   }
 }
