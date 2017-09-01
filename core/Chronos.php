@@ -20,5 +20,3 @@ class Chronos
     die("<h1>It's a live!</h1>");
   }
 }
-
-?>

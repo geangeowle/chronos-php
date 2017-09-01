@@ -5,5 +5,3 @@
 
   $app = Chronos::getInstance();
   $app->run();
-
-?>
