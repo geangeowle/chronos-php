@@ -9,7 +9,7 @@ final class Router
     $returnDefault = array(
         'params' => array(
             'path' => 'controller',
-            'controller' => 'Pages',
+            'controller' => 'Page',
             'action' => 'index',
             'params' => array()
         )
