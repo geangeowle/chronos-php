@@ -48,9 +48,9 @@ class View{
         include ($___viewFn);
 
         $out = "";
-        $out .= "<!-- Start file: {$___viewFn} -->";
+        $out .= "<!-- Start file: {$___viewFn} -->\n";
         $out .= ob_get_clean();
-        $out .= "<!-- End file: {$___viewFn} -->";
+        $out .= "\n<!-- End file: {$___viewFn} -->";
         return $out;
     }
 
@@ -83,10 +83,10 @@ class View{
         // $pathCore = VIEWS_CORE . $this->viewPath . DS . $action . ".php";
         // $pathApp = VIEWS . $this->viewPath . DS . $action . ".php";
 
-        $pathCore = "/var/www/html/core/Views/" . $this->viewPath . "/" . $action . ".php";
-        $pathApp = "" . $this->viewPath . "/" . $action . ".php";
-
+        $pathCore = BASE_DIR . "/core/Views/" . $this->viewPath . "/" . $action . ".php";
+        $pathApp = BASE_DIR . "/app/Views/" . $this->viewPath . "/" . $action . ".php";
         $path = (file_exists($pathApp)) ? $pathApp : $pathCore;
+
         return $path;
     }
 
@@ -96,8 +96,11 @@ class View{
         // $pathCore = LAYOUTS_CORE . $action . ".php";
         // $pathApp = LAYOUTS . $action . ".php";
 
-        $pathCore = "/var/www/html/core/Views/layouts/" . $action . ".php";
-        $pathApp = "" . $action . ".php";
+        $pathCore = BASE_DIR . "/core/Views/layouts/" . $action . ".php";
+        $pathApp = BASE_DIR . "/app/Views/layouts/" . $action . ".php";
+        #print_r($pathCore);
+        #echo "<br />";
+        #print_r($pathApp);
 
         $path = (file_exists($pathApp)) ? $pathApp : $pathCore;
         return $path;
