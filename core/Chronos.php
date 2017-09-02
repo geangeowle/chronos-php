@@ -20,6 +20,5 @@ final class Chronos
   {
     $objDispatcher = new Dispatcher();
     $objDispatcher->dispatch();
-    die("<h1>It's a live!</h1>");
   }
 }
