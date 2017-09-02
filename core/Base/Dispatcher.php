@@ -13,26 +13,33 @@ final class Dispatcher
   public function __construct($url = null)
   {
     $this->url = (isset($_GET["url"])) ? $_GET["url"] : $url;
-    echo $this->url;
   }
 
   public function dispatch()
   {
-      echo "<pre>";
       $this->params = Router::parse($this->url);
-      print_r($this->params);
-
       $objController = $this->__getController();
+      $objController->params = $this->params;
+      return $this->_invoke($objController, $this->params);
   }
 
   private function __getController(){
     $ctrlClass = "Chronos\\Controllers\\" . $this->__loadController($this->params);
     $objController = new $ctrlClass();
+    return $objController;
   }
 
   private function __loadController($params){
     $name = $params["params"]["controller"];
     App::import("Controller", $name);
     return Inflector::camelize($name . "_controller");
+  }
+
+  public function _invoke(&$controller, $params)
+  {
+      $controller->output = $controller->render($params["params"]["action"]);
+      if (isset($controller->output)) {
+          echo ($controller->output);
+      }
   }
 }
