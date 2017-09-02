@@ -1,8 +1,9 @@
 <?php
 namespace Chronos\Controllers;
-echo "sss";
 
-final class PageController
+use Chronos\Controllers\AppControlle;
+
+final class PageController extends AppController
 {
-  
+    public $name = "Page";
 }
