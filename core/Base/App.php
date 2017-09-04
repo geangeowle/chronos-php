@@ -1,14 +1,17 @@
 <?php
-
 namespace Chronos\Base;
 use Chronos\Utils\Inflector;
+use Chronos\Base\BaseObject;
 
-final class App
+class App extends BaseObject
 {
-  public static function import($type = "", $file)
+  public function import($type = "", $file)
   {
       $nameFile = Inflector::camelize($file . "_controller");
-      require_once "/var/www/html/core/Controllers/{$nameFile}.php";
-
+      $appConfig = $this->getConfig();
+      $pathCore = $appConfig["CHRONOS_PATH"] . "/Controllers/{$nameFile}.php";
+      $pathApp = $appConfig["APP_PATH"] . "/Controllers/{$nameFile}.php";
+      $path = (file_exists($pathApp)) ? $pathApp : $pathCore;
+      require_once($path);
   }
 }
