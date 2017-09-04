@@ -1,16 +1,16 @@
 <?php
 namespace Chronos\Views;
 
+use Chronos\Base\App;
 use Chronos\Utils\Inflector;
 
-class View{
+class View extends App
+{
 
     public $autoLayout = true;
     public $viewPath = null;
     public $viewVars = array();
     public $layout = "default";
-
-    private $appConfig = array();
 
     public function __construct(&$controller)
     {
@@ -18,7 +18,7 @@ class View{
             $this->viewPath = $controller->viewPath;
             $this->action = Inflector::underscore($controller->params["params"]["action"]);
             $this->params = $controller->params;
-            $this->appConfig = $controller->appConfig;
+            $this->setConfig($controller->getConfig());
         }
     }
 
@@ -83,8 +83,9 @@ class View{
     public function _getViewFileName($action = null)
     {
         $action = Inflector::underscore($action);
-        $pathCore = $this->appConfig["CHRONOS_PATH"] . "/Views/" . $this->viewPath . "/" . $action . ".php";
-        $pathApp = $this->appConfig["APP_PATH"] . "/Views/" . $this->viewPath . "/" . $action . ".php";
+        $appConfig = $this->getConfig();
+        $pathCore = $appConfig["CHRONOS_PATH"] . "/Views/" . $this->viewPath . "/" . $action . ".php";
+        $pathApp = $appConfig["APP_PATH"] . "/Views/" . $this->viewPath . "/" . $action . ".php";
         $path = (file_exists($pathApp)) ? $pathApp : $pathCore;
         return $path;
     }
@@ -92,8 +93,9 @@ class View{
     public function _getLayoutFileName($action = null)
     {
         $action = Inflector::underscore($action);
-        $pathCore = $this->appConfig["CHRONOS_PATH"] . "/Views/layouts/" . $action . ".php";
-        $pathApp = $this->appConfig["APP_PATH"] . "/Views/layouts/" . $action . ".php";
+        $appConfig = $this->getConfig();
+        $pathCore = $appConfig["CHRONOS_PATH"] . "/Views/layouts/" . $action . ".php";
+        $pathApp = $appConfig["APP_PATH"] . "/Views/layouts/" . $action . ".php";
         $path = (file_exists($pathApp)) ? $pathApp : $pathCore;
         return $path;
     }

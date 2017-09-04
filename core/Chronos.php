@@ -1,26 +1,21 @@
 <?php
 namespace Chronos;
 
+use Chronos\Base\BaseObject;
 use Chronos\Base\Dispatcher;
 
 //use .....
 
-final class Chronos
+final class Chronos extends BaseObject
 {
-    private $appConfig = array();
-    
     public function __construct($newAppConfig = array()){
       $this->setConfig($newAppConfig);
-    }
-
-    public function setConfig($newAppConfig = array()){
-      $this->appConfig = $newAppConfig;
     }
 
     public function run()
     {
         $objDispatcher = new Dispatcher();
-        $objDispatcher->setConfig($this->appConfig);
+        $objDispatcher->setConfig($this->getConfig());
         $objDispatcher->dispatch();
     }
 }
