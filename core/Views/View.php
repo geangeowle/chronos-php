@@ -10,12 +10,15 @@ class View{
     public $viewVars = array();
     public $layout = "default";
 
+    private $appConfig = array();
+
     public function __construct(&$controller)
     {
         if (is_object($controller)) {
             $this->viewPath = $controller->viewPath;
             $this->action = Inflector::underscore($controller->params["params"]["action"]);
             $this->params = $controller->params;
+            $this->appConfig = $controller->appConfig;
         }
     }
 
@@ -80,28 +83,17 @@ class View{
     public function _getViewFileName($action = null)
     {
         $action = Inflector::underscore($action);
-        // $pathCore = VIEWS_CORE . $this->viewPath . DS . $action . ".php";
-        // $pathApp = VIEWS . $this->viewPath . DS . $action . ".php";
-
-        $pathCore = BASE_DIR . "/core/Views/" . $this->viewPath . "/" . $action . ".php";
-        $pathApp = BASE_DIR . "/app/Views/" . $this->viewPath . "/" . $action . ".php";
+        $pathCore = $this->appConfig["CHRONOS_PATH"] . "/Views/" . $this->viewPath . "/" . $action . ".php";
+        $pathApp = $this->appConfig["APP_PATH"] . "/Views/" . $this->viewPath . "/" . $action . ".php";
         $path = (file_exists($pathApp)) ? $pathApp : $pathCore;
-
         return $path;
     }
 
     public function _getLayoutFileName($action = null)
     {
         $action = Inflector::underscore($action);
-        // $pathCore = LAYOUTS_CORE . $action . ".php";
-        // $pathApp = LAYOUTS . $action . ".php";
-
-        $pathCore = BASE_DIR . "/core/Views/layouts/" . $action . ".php";
-        $pathApp = BASE_DIR . "/app/Views/layouts/" . $action . ".php";
-        #print_r($pathCore);
-        #echo "<br />";
-        #print_r($pathApp);
-
+        $pathCore = $this->appConfig["CHRONOS_PATH"] . "/Views/layouts/" . $action . ".php";
+        $pathApp = $this->appConfig["APP_PATH"] . "/Views/layouts/" . $action . ".php";
         $path = (file_exists($pathApp)) ? $pathApp : $pathCore;
         return $path;
     }
