@@ -1,18 +1,18 @@
 <?php
+
 namespace Chronos\Controllers;
 
 use Chronos\Base\App;
 use Chronos\Utils\Inflector;
-use Chronos\Views\View;
 
 class Controller extends App
 {
+    public $name = '';
+    public $viewPath;
+    public $output;
 
-    public $name = "";
-    public $viewPath = null;
-    public $output = null;
-
-    public function __construct(){
+    public function __construct()
+    {
         if ($this->viewPath === null) {
             $this->viewPath = Inflector::underscore($this->name);
         }
@@ -28,7 +28,7 @@ class Controller extends App
 
         $this->autoRender = false;
         $this->output .= $view->render($action, $layout, $file);
+
         return $this->output;
     }
-
 }

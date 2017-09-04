@@ -1,9 +1,8 @@
 <?php
-namespace Chronos\Controllers;
 
-use Chronos\Controllers\AppControlle;
+namespace Chronos\Controllers;
 
 final class PageController extends AppController
 {
-    public $name = "Page";
+    public $name = 'Page';
 }

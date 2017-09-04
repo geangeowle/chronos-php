@@ -1,9 +1,7 @@
 <?php
-namespace Chronos\Controllers;
 
-use Chronos\Controllers\Controller;
+namespace Chronos\Controllers;
 
 class AppController extends Controller
 {
-
 }

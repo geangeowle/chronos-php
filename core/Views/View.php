@@ -1,4 +1,5 @@
 <?php
+
 namespace Chronos\Views;
 
 use Chronos\Base\App;
@@ -6,17 +7,16 @@ use Chronos\Utils\Inflector;
 
 class View extends App
 {
-
     public $autoLayout = true;
-    public $viewPath = null;
-    public $viewVars = array();
-    public $layout = "default";
+    public $viewPath;
+    public $viewVars = [];
+    public $layout = 'default';
 
-    public function __construct(&$controller)
+    public function __construct($controller)
     {
         if (is_object($controller)) {
             $this->viewPath = $controller->viewPath;
-            $this->action = Inflector::underscore($controller->params["params"]["action"]);
+            $this->action = Inflector::underscore($controller->params['params']['action']);
             $this->params = $controller->params;
             $this->setConfig($controller->getConfig());
         }
@@ -26,7 +26,7 @@ class View extends App
     {
         $out = null;
 
-        if ($action != false && $viewFileName = $this->_getViewFileName($action)) {
+        if ($action !== false && $viewFileName = $this->_getViewFileName($action)) {
             $out = $this->_render($viewFileName, $this->viewVars);
         }
 
@@ -48,12 +48,13 @@ class View extends App
         extract($___dataForView, EXTR_SKIP);
         ob_start();
 
-        include ($___viewFn);
+        include $___viewFn;
 
-        $out = "";
+        $out = '';
         $out .= "<!-- Start file: {$___viewFn} -->\n";
         $out .= ob_get_clean();
         $out .= "\n<!-- End file: {$___viewFn} -->";
+
         return $out;
     }
 
@@ -64,16 +65,16 @@ class View extends App
             return $this->output;
         }
 
-        if (! empty($this->pageTitle)) {
-            $pageTitle = "APP_TITLE" . ": " . $this->pageTitle;
+        if (!empty($this->pageTitle)) {
+            $pageTitle = 'APP_TITLE'.': '.$this->pageTitle;
         } else {
-            $pageTitle = "APP_TITLE" . ": " . Inflector::humanize($this->viewPath);
+            $pageTitle = 'APP_TITLE'.': '.Inflector::humanize($this->viewPath);
         }
 
-        $data_for_layout = array_merge($this->viewVars, array(
-            "title_for_layout" => $pageTitle,
-            "content_for_layout" => $content_for_layout
-        ));
+        $data_for_layout = array_merge($this->viewVars, [
+            'title_for_layout' => $pageTitle,
+            'content_for_layout' => $content_for_layout,
+        ]);
 
         $this->output = $this->_render($layoutFileName, $data_for_layout);
 
@@ -84,9 +85,10 @@ class View extends App
     {
         $action = Inflector::underscore($action);
         $appConfig = $this->getConfig();
-        $pathCore = $appConfig["CHRONOS_PATH"] . "/Views/" . $this->viewPath . "/" . $action . ".php";
-        $pathApp = $appConfig["APP_PATH"] . "/Views/" . $this->viewPath . "/" . $action . ".php";
+        $pathCore = $appConfig['CHRONOS_PATH'].'/Views/'.$this->viewPath.'/'.$action.'.php';
+        $pathApp = $appConfig['APP_PATH'].'/Views/'.$this->viewPath.'/'.$action.'.php';
         $path = (file_exists($pathApp)) ? $pathApp : $pathCore;
+
         return $path;
     }
 
@@ -94,10 +96,10 @@ class View extends App
     {
         $action = Inflector::underscore($action);
         $appConfig = $this->getConfig();
-        $pathCore = $appConfig["CHRONOS_PATH"] . "/Views/layouts/" . $action . ".php";
-        $pathApp = $appConfig["APP_PATH"] . "/Views/layouts/" . $action . ".php";
+        $pathCore = $appConfig['CHRONOS_PATH'].'/Views/layouts/'.$action.'.php';
+        $pathApp = $appConfig['APP_PATH'].'/Views/layouts/'.$action.'.php';
         $path = (file_exists($pathApp)) ? $pathApp : $pathCore;
+
         return $path;
     }
-
 }

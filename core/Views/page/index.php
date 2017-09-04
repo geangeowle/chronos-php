@@ -4,5 +4,7 @@
 	<p><font size="3">Under Development.</font></p>
 	<h1>It's a live!</h1>
 	<br />
-	<p align="right"><font size="3"><?php echo date("d/m/Y"); ?> Gean Geowle</font></p>
+	<p align="right">
+        <font size="3"><?php echo date('d/m/Y'); ?> Gean Geowle</font>
+    </p>
 </div>

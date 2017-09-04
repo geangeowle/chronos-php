@@ -1,15 +1,18 @@
 <?php
+
 namespace Chronos\Base;
 
-class BaseObject{
+class BaseObject
+{
+    private $appConfig = [];
 
-  private $appConfig = array();
+    public function setConfig($newAppConfig = [])
+    {
+        $this->appConfig = $newAppConfig;
+    }
 
-  public function setConfig($newAppConfig = array()){
-    $this->appConfig = $newAppConfig;
-  }
-
-  public function getConfig(){
-    return $this->appConfig;
-  }
+    public function getConfig()
+    {
+        return $this->appConfig;
+    }
 }
