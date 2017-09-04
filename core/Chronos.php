@@ -7,18 +7,20 @@ use Chronos\Base\Dispatcher;
 
 final class Chronos
 {
-    private static $instance = null;
-    public static function getInstance()
-    {
-        if (is_null(self::$instance)) {
-            self::$instance = new self();
-        }
-        return self::$instance;
+    private $appConfig = array();
+    
+    public function __construct($newAppConfig = array()){
+      $this->setConfig($newAppConfig);
     }
 
-    public static function run()
+    public function setConfig($newAppConfig = array()){
+      $this->appConfig = $newAppConfig;
+    }
+
+    public function run()
     {
         $objDispatcher = new Dispatcher();
+        $objDispatcher->setConfig($this->appConfig);
         $objDispatcher->dispatch();
     }
 }
