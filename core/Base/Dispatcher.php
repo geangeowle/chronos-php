@@ -9,10 +9,15 @@ final class Dispatcher
 {
   public $url = null;
   private $params = null;
+  private $appConfig = array();
 
   public function __construct($url = null)
   {
     $this->url = (isset($_GET["url"])) ? $_GET["url"] : $url;
+  }
+
+  public function setConfig($newAppConfig = array()){
+    $this->appConfig = $newAppConfig;
   }
 
   public function dispatch()
@@ -20,6 +25,7 @@ final class Dispatcher
       $this->params = Router::parse($this->url);
       $objController = $this->__getController();
       $objController->params = $this->params;
+      $objController->appConfig = $this->appConfig;
       return $this->_invoke($objController, $this->params);
   }
 
