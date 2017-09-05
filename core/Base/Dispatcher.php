@@ -17,7 +17,15 @@ final class Dispatcher extends App
 
     private function __getController()
     {
-        $ctrlClass = 'Chronos\\Controllers\\'.$this->__loadController($this->params);
+        $ctrlClassName = $this->__loadController($this->params);
+        $ctrlClass = 'Chronos\\Controllers\\'.$ctrlClassName;
+        if (!class_exists($ctrlClass)) {
+            $this->url = '/error/missingClass/'.$ctrlClassName;
+            $this->params = Router::parse($this->url);
+            echo '<pre>';
+            print_r($this->params);
+            $ctrlClass = 'Chronos\\Controllers\\'.$this->__loadController($this->params);
+        }
         $objController = new $ctrlClass();
 
         return $objController;
@@ -43,6 +51,10 @@ final class Dispatcher extends App
 
     public function _invoke(&$controller, $params)
     {
+        if (method_exists($controller, 'dispatchMethod')) {
+            $output = $controller->dispatchMethod($params['params']['action'], $params['params']['params']);
+        }
+
         $controller->output = $controller->render($params['params']['action']);
         if (isset($controller->output)) {
             echo $controller->output;
