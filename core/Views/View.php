@@ -18,6 +18,9 @@ class View extends App
             $this->viewPath = $controller->viewPath;
             $this->action = Inflector::underscore($controller->params['params']['action']);
             $this->params = $controller->params;
+            if (isset($controller->layout)) {
+                $this->layout = $controller->layout;
+            }
             $this->setConfig($controller->getConfig());
         }
     }
