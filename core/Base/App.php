@@ -13,6 +13,25 @@ class App extends BaseObject
         $pathCore = $appConfig['CHRONOS_PATH']."/Controllers/{$nameFile}.php";
         $pathApp = $appConfig['APP_PATH']."/Controllers/{$nameFile}.php";
         $path = (file_exists($pathApp)) ? $pathApp : $pathCore;
-        require_once $path;
+
+        $statusImport = false;
+        if (file_exists($path)) {
+            require_once $path;
+            $statusImport = true;
+        }
+
+        return $statusImport;
+    }
+
+    public function dispatchMethod($method, $params = [])
+    {
+        if (method_exists($this, $method)) {
+            return call_user_func_array([
+                &$this,
+                $method,
+            ], $params);
+        }
+        // $name = down($this->name);
+        // $this->redirect(URL_FULL_APP . "/error/missingMethod/{$name}/{$method}/");
     }
 }
