@@ -11,6 +11,7 @@ class View extends App
     public $viewPath;
     public $viewVars = [];
     public $layout = 'default';
+    public $pageTitle = '';
 
     public function __construct($controller)
     {
@@ -18,6 +19,7 @@ class View extends App
             $this->viewPath = $controller->viewPath;
             $this->action = Inflector::underscore($controller->params['params']['action']);
             $this->params = $controller->params;
+            $this->pageTitle = $controller->pageTitle;
             if (isset($controller->layout)) {
                 $this->layout = $controller->layout;
             }
@@ -69,7 +71,8 @@ class View extends App
         }
 
         if (!empty($this->pageTitle)) {
-            $pageTitle = 'APP_TITLE'.': '.$this->pageTitle;
+            //$pageTitle = 'APP_TITLE'.': '.$this->pageTitle;
+            $pageTitle = $this->pageTitle;
         } else {
             $pageTitle = 'APP_TITLE'.': '.Inflector::humanize($this->viewPath);
         }
@@ -87,9 +90,10 @@ class View extends App
     public function _getViewFileName($action = null)
     {
         $action = Inflector::underscore($action);
+        $viewPath = Inflector::camelize($this->viewPath);
         $appConfig = $this->getConfig();
-        $pathCore = $appConfig['CHRONOS_PATH'].'/Views/'.$this->viewPath.'/'.$action.'.php';
-        $pathApp = $appConfig['APP_PATH'].'/Views/'.$this->viewPath.'/'.$action.'.php';
+        $pathCore = $appConfig['CHRONOS_PATH'].'/Views/'.$viewPath.'/'.$action.'.php';
+        $pathApp = $appConfig['APP_PATH'].'/Views/'.$viewPath.'/'.$action.'.php';
         $path = (file_exists($pathApp)) ? $pathApp : $pathCore;
 
         return $path;
@@ -99,8 +103,8 @@ class View extends App
     {
         $action = Inflector::underscore($action);
         $appConfig = $this->getConfig();
-        $pathCore = $appConfig['CHRONOS_PATH'].'/Views/layouts/'.$action.'.php';
-        $pathApp = $appConfig['APP_PATH'].'/Views/layouts/'.$action.'.php';
+        $pathCore = $appConfig['CHRONOS_PATH'].'/Views/Layouts/'.$action.'.php';
+        $pathApp = $appConfig['APP_PATH'].'/Views/Layouts/'.$action.'.php';
         $path = (file_exists($pathApp)) ? $pathApp : $pathCore;
 
         return $path;
