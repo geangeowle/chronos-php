@@ -22,8 +22,8 @@ final class Dispatcher extends App
         if (!class_exists($ctrlClass)) {
             $this->url = '/error/missingClass/'.$ctrlClassName;
             $this->params = Router::parse($this->url);
-            echo '<pre>';
-            print_r($this->params);
+            // echo '<pre>';
+            // print_r($this->params);
             $ctrlClass = 'Chronos\\Controllers\\'.$this->__loadController($this->params);
         }
         $objController = new $ctrlClass();
