@@ -8,6 +8,7 @@ use Chronos\Utils\Inflector;
 class Controller extends App
 {
     public $name = '';
+    public $pageTitle = '';
     public $viewPath;
     public $output;
 
