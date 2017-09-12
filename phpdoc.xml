@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdoc>
+    <title>ChronosPHP Documentation</title>
+    <parser>
+        <target>build</target>
+    </parser>
+    <transformer>
+        <target>docs</target>
+    </transformer>
+    <transformations>
+        <template name="responsive-twig"/>
+    </transformations>
+    <files>
+        <directory>core</directory>
+        <ignore>test/*</ignore>
+    </files>
+</phpdoc>
