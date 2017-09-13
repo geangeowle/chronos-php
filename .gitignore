@@ -2,3 +2,5 @@
 vendor/
 composer.lock
 build/
+node_modules/
+yarn.lock
