@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "grunt": "^1.0.1",
+    "grunt-changelog": "^0.3.2"
+  }
+}
