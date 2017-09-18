@@ -14,4 +14,8 @@ final class ErrorController extends AppController
         // print_r($className);
         //$this->set("dsClassMissing", $className);
     }
+
+    public function missingMethod($methodName = '')
+    {
+    }
 }
