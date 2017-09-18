@@ -32,4 +32,8 @@ class Controller extends App
 
         return $this->output;
     }
+
+    public function index()
+    {
+    }
 }
