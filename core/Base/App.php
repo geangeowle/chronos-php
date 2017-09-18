@@ -25,15 +25,15 @@ class App extends BaseObject
 
     public function dispatchMethod($method, $params = [])
     {
-        if (method_exists($this, $method)) {
+        if (is_callable([$this, $method])) {
             return call_user_func_array([&$this, $method], $params);
-        }else{
-            $name = $this->name;//down($this->name);
-            $this->redirect("http://localhost:8056/public/?url=error/missingMethod/{$name}/{$method}/");
         }
+        $name = $this->name; //down($this->name);
+        $this->redirect("http://localhost:8056/public/?url=error/missingMethod/{$name}/{$method}/");
     }
 
-    public function redirect($url){
-        header("Location: " . $url);
+    public function redirect($url)
+    {
+        header('Location: '.$url);
     }
 }
