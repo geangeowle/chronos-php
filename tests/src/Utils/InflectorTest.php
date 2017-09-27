@@ -1,12 +1,11 @@
 <?php
 
 use Chronos\Utils\Inflector;
-use PHPUnit\Framework\TestCase;
 
 /**
  * @coversNothing
  */
-class InflectorTest extends TestCase
+class InflectorTest extends PHPUnit\Framework\TestCase
 {
     /**
      * [testUnderscoreReturnsUnderscoreString description].

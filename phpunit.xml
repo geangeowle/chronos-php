@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="phpunit.xsd"
+xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/6.0/phpunit.xsd"
          bootstrap="tests/bootstrap.php"
          backupGlobals="false"
          verbose="true"
@@ -8,7 +8,7 @@
 
     <testsuites>
         <testsuite name="Core Test Suite">
-            <directory>./tests/core/</directory>
+            <directory>./tests/src/</directory>
         </testsuite>
     </testsuites>
 
@@ -24,5 +24,5 @@
         <log type="coverage-html" target="build/coverage" charset="UTF-8" yui="true" highlight="true" lowUpperBound="35" highLowerBound="70" />
         <log type="testdox-text" target="build/testdox/executed.txt"/>
     </logging>
-    
+
 </phpunit>
