@@ -4,12 +4,6 @@
     error_reporting(E_ALL);
     date_default_timezone_set('America/Sao_Paulo');
 
-    function pr($var){
-        echo "<pre>";
-        print_r($var);
-        echo "</pre>";
-    }
-
     use Chronos\Chronos;
 
     require_once dirname(__DIR__).'/vendor/autoload.php';
