@@ -7,7 +7,7 @@ final class Router
     public static function parse($url)
     {
         $returnDefault = [
-            'params' => [
+            'url' => [
                 'path' => 'controller',
                 'controller' => 'Page',
                 'action' => 'index',
@@ -24,17 +24,17 @@ final class Router
         if (!empty($url)) {
             $list = explode('/', $url);
 
-            $returnDefault['params']['controller'] = $list[1];
-            $returnDefault['params']['path'] = 'app';
+            $returnDefault['url']['controller'] = $list[1];
+            $returnDefault['url']['path'] = 'app';
             unset($list[0], $list[1]);
 
             if (isset($list[2]) && !empty($list[2])) {
-                $returnDefault['params']['action'] = $list[2];
+                $returnDefault['url']['action'] = $list[2];
                 unset($list[2]);
             }
             foreach ($list as $key => $vl) {
                 if (!empty($vl)) {
-                    $returnDefault['params']['params'][] = $vl;
+                    $returnDefault['url']['params'][] = $vl;
                 }
             }
         }

@@ -17,8 +17,13 @@ final class Dispatcher extends App
 
     private function __getController()
     {
+        pr($this->params);
         $ctrlClassName = $this->__loadController($this->params);
-        $ctrlClass = 'Chronos\\Controllers\\'.$ctrlClassName;
+        $ctrlClass = 'App\\Controllers\\'.$ctrlClassName;
+        pr($ctrlClass);
+        if($ctrlClass == 'App\\Controllers\\ErrorController'){
+            $ctrlClass = 'Chronos\\Controllers\\'.$ctrlClassName;
+        }
         if (!class_exists($ctrlClass)) {
             $this->redirect("http://localhost:8056/public/?url=error/missingClass/{$ctrlClassName}");
             // $this->url = '/error/missingClass/'.$ctrlClassName;
@@ -27,14 +32,14 @@ final class Dispatcher extends App
             // // print_r($this->params);
             // $ctrlClass = 'Chronos\\Controllers\\'.$this->__loadController($this->params);
         }
-        $objController = new $ctrlClass();
+        $objController = new $ctrlClass($this->getConfig());
 
         return $objController;
     }
 
     private function __loadController($params)
     {
-        $name = $params['params']['controller'];
+        $name = $params['url']['controller'];
         $this->import('Controller', $name);
 
         return Inflector::camelize($name.'_controller');
@@ -45,7 +50,7 @@ final class Dispatcher extends App
         $this->params = Router::parse($this->url);
         $objController = $this->__getController();
         $objController->params = $this->params;
-        $objController->setConfig($this->getConfig());
+        //$objController->setConfig($this->getConfig());
 
         return $this->_invoke($objController, $this->params);
     }
@@ -53,10 +58,10 @@ final class Dispatcher extends App
     public function _invoke(&$controller, $params)
     {
         if (method_exists($controller, 'dispatchMethod')) {
-            $output = $controller->dispatchMethod($params['params']['action'], $params['params']['params']);
+            $output = $controller->dispatchMethod($params['url']['action'], $params['url']['params']);
         }
 
-        $controller->output = $controller->render($params['params']['action']);
+        $controller->output = $controller->render($params['url']['action']);
         if (isset($controller->output)) {
             echo $controller->output;
         }
