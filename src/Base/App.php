@@ -8,19 +8,36 @@ class App extends BaseObject
 {
     public function import($type, $file)
     {
-        $nameFile = Inflector::camelize($file.'_controller');
+        $paths = [
+            "Model" => [
+                "folder" => "Models",
+                "alias" => "_model"
+            ],
+            "Controller" => [
+                "folder" => "Controllers",
+                "alias" => "_controller"
+            ]
+        ];
+
+        $nameFile = Inflector::camelize($file . $paths[$type]['alias']);
         $appConfig = $this->getConfig();
-        $pathCore = $appConfig['CHRONOS_PATH']."/Controllers/{$nameFile}.php";
-        $pathApp = $appConfig['APP_PATH']."/Controllers/{$nameFile}.php";
+        $pathCore = $appConfig['CHRONOS_PATH']."/".$paths[$type]['folder']."/{$nameFile}.php";
+        $pathApp = $appConfig['APP_PATH']."/".$paths[$type]['folder']."/{$nameFile}.php";
+
+        pr($pathCore);
+        pr($pathApp);
+
         $path = (file_exists($pathApp)) ? $pathApp : $pathCore;
 
+        pr($path);
+
         $statusImport = false;
-        if (file_exists($path)) {
+         if (file_exists($path)) {
             require_once $path;
             $statusImport = true;
-        }
+         }
 
-        return $statusImport;
+        return $path;
     }
 
     public function dispatchMethod($method, $params = [])
