@@ -17,7 +17,7 @@ class View extends App
     {
         if (is_object($controller)) {
             $this->viewPath = $controller->viewPath;
-            $this->action = Inflector::underscore($controller->params['params']['action']);
+            $this->action = Inflector::underscore($controller->params['url']['action']);
             $this->params = $controller->params;
             $this->pageTitle = $controller->pageTitle;
             if (isset($controller->layout)) {
@@ -31,15 +31,15 @@ class View extends App
     {
         $out = null;
 
-        if ($action !== false && $viewFileName = $this->_getViewFileName($action)) {
+        if (false !== $action && $viewFileName = $this->_getViewFileName($action)) {
             $out = $this->_render($viewFileName, $this->viewVars);
         }
 
-        if ($layout === null) {
+        if (null === $layout) {
             $layout = $this->layout;
         }
 
-        if ($out !== false) {
+        if (false !== $out) {
             if ($layout && $this->autoLayout) {
                 $out = $this->renderLayout($out, $layout);
             }
