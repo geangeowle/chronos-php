@@ -17,11 +17,11 @@ final class Dispatcher extends App
 
     private function __getController()
     {
-        pr($this->params);
+        //pr($this->params);
         $ctrlClassName = $this->__loadController($this->params);
         $ctrlClass = 'App\\Controllers\\'.$ctrlClassName;
-        pr($ctrlClass);
-        if($ctrlClass == 'App\\Controllers\\ErrorController'){
+        //pr($ctrlClass);
+        if ('App\\Controllers\\ErrorController' === $ctrlClass) {
             $ctrlClass = 'Chronos\\Controllers\\'.$ctrlClassName;
         }
         if (!class_exists($ctrlClass)) {
@@ -32,7 +32,7 @@ final class Dispatcher extends App
             // // print_r($this->params);
             // $ctrlClass = 'Chronos\\Controllers\\'.$this->__loadController($this->params);
         }
-        $objController = new $ctrlClass($this->getConfig());
+        $objController = new $ctrlClass();
 
         return $objController;
     }
@@ -50,7 +50,7 @@ final class Dispatcher extends App
         $this->params = Router::parse($this->url);
         $objController = $this->__getController();
         $objController->params = $this->params;
-        //$objController->setConfig($this->getConfig());
+        $objController->setConfig($this->getConfig());
 
         return $this->_invoke($objController, $this->params);
     }
