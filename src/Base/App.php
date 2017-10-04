@@ -9,35 +9,41 @@ class App extends BaseObject
     public function import($type, $file)
     {
         $paths = [
-            "Model" => [
-                "folder" => "Models",
-                "alias" => "_model"
+            'Model' => [
+                'folder' => 'Models',
+                'alias' => '_model',
             ],
-            "Controller" => [
-                "folder" => "Controllers",
-                "alias" => "_controller"
-            ]
+            'Controller' => [
+                'folder' => 'Controllers',
+                'alias' => '_controller',
+            ],
         ];
 
-        $nameFile = Inflector::camelize($file . $paths[$type]['alias']);
+        $nameFile = Inflector::camelize($file.$paths[$type]['alias']);
         $appConfig = $this->getConfig();
-        $pathCore = $appConfig['CHRONOS_PATH']."/".$paths[$type]['folder']."/{$nameFile}.php";
-        $pathApp = $appConfig['APP_PATH']."/".$paths[$type]['folder']."/{$nameFile}.php";
+        $pathCore = $appConfig['CHRONOS_PATH'].'/'.$paths[$type]['folder']."/{$nameFile}.php";
+        $pathApp = $appConfig['APP_PATH'].'/'.$paths[$type]['folder']."/{$nameFile}.php";
 
-        pr($pathCore);
-        pr($pathApp);
+        // pr($pathCore);
+        // pr($pathApp);
 
-        $path = (file_exists($pathApp)) ? $pathApp : $pathCore;
+        $baseNamespace = 'Chronos\\';
+        $path = $pathCore;
+        if (file_exists($pathApp)) {
+            $baseNamespace = 'App\\';
+            $path = $pathApp;
+        }
 
-        pr($path);
+        // pr($path);
 
         $statusImport = false;
-         if (file_exists($path)) {
-            require_once $path;
-            $statusImport = true;
-         }
+        //if (file_exists($path)) {
+        require_once $path;
+        $statusImport = true;
+        //}
+        $dsNamespace = $baseNamespace.$paths[$type]['folder'];
 
-        return $path;
+        return $dsNamespace;
     }
 
     public function dispatchMethod($method, $params = [])
