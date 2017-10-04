@@ -2,15 +2,25 @@
 
 namespace App\Controllers;
 
-use App\Controllers\AppController;
+use App\Models\PageModel;
 
-final class PageController extends AppController
+class PageController extends AppController
 {
     public $name = 'Page';
     public $pageTitle = 'ChronosPHP';
-    public $uses = ['Error'];
 
-    public function index(){
+    public function init()
+    {
+        $n = (new PageModel())->r();
+        // $n = (new UserModel())->r();
+    }
 
+    public function index()
+    {
+    }
+
+    public function getX()
+    {
+        return 1;
     }
 }
