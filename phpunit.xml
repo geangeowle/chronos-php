@@ -7,6 +7,9 @@ xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/6.0/phpunit.xsd"
          colors="true">
 
     <testsuites>
+        <testsuite name="App Test Suite">
+            <directory>./tests/app/</directory>
+        </testsuite>
         <testsuite name="Core Test Suite">
             <directory>./tests/src/</directory>
         </testsuite>
