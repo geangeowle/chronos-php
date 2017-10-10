@@ -2,16 +2,17 @@
 <phpdoc>
     <title>ChronosPHP Documentation</title>
     <parser>
-        <target>build</target>
+        <target>docs/build</target>
     </parser>
     <transformer>
         <target>docs</target>
     </transformer>
     <transformations>
-        <template name="responsive-twig"/>
+        <!-- <template name="responsive-twig"/> -->
+        <template name="xml"/>
     </transformations>
     <files>
-        <directory>core</directory>
+        <directory>src</directory>
         <ignore>test/*</ignore>
     </files>
 </phpdoc>
