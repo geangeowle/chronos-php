@@ -19,6 +19,9 @@ class Model extends App
         pr($type);
         pr($options);
 
+        $querySQL = '';
+        $this->_execute($querySQL);
+
         pr('----end -> find');
 
         return [];
@@ -27,6 +30,8 @@ class Model extends App
     private function _execute($querySQL)
     {
         pr($querySQL);
+
+        $connectionManager = new ConnectionManager($this->useDbConfig);
 
         return [];
     }
