@@ -9,12 +9,17 @@ abstract class DataSource
         if (!$this->enable()) {
             trigger_error($this->getDescription().' is not enable!');
         }
-        pr('ok....->>>i am in '.__NAMESPACE__);
+
+        $this->connect();
+
+        //pr('ok....->>>i am in '.__NAMESPACE__);
     }
 
     abstract public function getDescription();
 
     abstract public function enable();
 
-    // abstract public function connect();
+    abstract public function connect();
+
+    abstract public function query();
 }
