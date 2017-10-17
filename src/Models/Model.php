@@ -8,10 +8,10 @@ class Model extends App
 {
     public $useDbConfig = 'default';
 
-    public function __construct()
-    {
-        //pr('....');
-    }
+    // public function __construct()
+    // {
+    //     //pr('....');
+    // }
 
     public function find($type, $options = [])
     {
@@ -29,10 +29,13 @@ class Model extends App
 
     private function _execute($querySQL)
     {
+        pr('####### querySQL');
         pr($querySQL);
-
         $connectionManager = new ConnectionManager($this->useDbConfig);
+        $connectionManagerDataSource = $connectionManager->getConnection($this->useDbConfig);
+        $result = $connectionManagerDataSource->query($querySQL);
+        pr($result);
 
-        return [];
+        return $result;
     }
 }
