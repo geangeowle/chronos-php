@@ -2,10 +2,35 @@
 
 namespace Chronos\Models\DataSources\Dbo;
 
-class DboSqlite
+use Chronos\Models\DataSources\DataSource;
+
+class DboSqlite extends DataSource
 {
-    public function __construct()
+    private $description = 'Driver DboSqlite';
+    private $extension = 'sqlite3';
+
+    public function getDescription()
     {
-        pr('ok....i am in '.__NAMESPACE__);
+        return sprintf('[%s] %s', $this->extension, $this->description);
+    }
+
+    public function enable()
+    {
+        return extension_loaded($this->extension);
+    }
+
+    public function connect()
+    {
+        //$dbhandle = sqlite_open('db/test.db', 0666, $error);
+        //try {
+        //$dbhandle = new \SQLite3('/var/www/html/public/test');
+        // } catch (Exception $e) {
+        //     die($e->getMessage());
+        // }
+    }
+
+    public function query()
+    {
+        return [$this->getDescription()];
     }
 }
