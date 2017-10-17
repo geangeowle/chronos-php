@@ -2,6 +2,8 @@
 
 namespace Chronos\Models;
 
+use Chronos\Utils\Inflector;
+
 class ConnectionManager
 {
     private $config;
@@ -23,30 +25,49 @@ class ConnectionManager
                 'database' => '_database',
                 'prefix' => '_prefix',
             ],
+            // 'default_another_server' => [
+            //     'datasource' => '_dbo',
+            //     'driver' => '_mysqli',
+            //     'host' => '_host',
+            //     'login' => '_login',
+            //     'password' => '_password',
+            //     'database' => '_database',
+            //     'prefix' => '_prefix',
+            // ],
         ];
 
+        // added this in parse function
         if (!isset($_this->_dataSources[$useDbConfig])) {
-            //pr($this->config);
             foreach ($this->config as $configName => $config) {
-                $_this->_connectionsPaths[$configName] = $this->_getConfigPaths($config);
+                $this->_connectionsPaths[$configName] = $this->_getConfigPaths($config);
 
-                $_namespace = $_this->_connectionsPaths[$configName]['namespace'];
-                $_this->_dataSources[$configName] = new $_namespace($config);
+                $_namespace = $this->_connectionsPaths[$configName]['namespace'];
+                $this->_dataSources[$configName] = new $_namespace($config);
             }
 
             //pr($_this->_connectionsPaths);
         }
+
+        // return $this->_dataSources[$useDbConfig];
+    }
+
+    public function getConnection($useDbConfig)
+    {
+        return $this->_dataSources[$useDbConfig];
     }
 
     private function _getConfigPaths($config)
     {
-        pr($config);
-
         $filename = '';
         $classname = '';
 
-        // change this
-        $classname = 'Chronos\\Models\\DataSources\\Dbo\\DboSqlite';
+        $dsDataSource = Inflector::camelize($config['datasource']);
+        $dsDriverName = Inflector::camelize($config['driver']);
+        $dataClassName = ['Chronos', 'Models', 'DataSources'];
+        $dataClassName[] = $dsDataSource;
+        $dataClassName[] = "{$dsDataSource}{$dsDriverName}";
+
+        $classname = implode('\\', $dataClassName);
 
         $_file = $filename;
         $_namespace = $classname;
