@@ -11,8 +11,11 @@ abstract class DataSource
         }
 
         $this->connect();
+    }
 
-        //pr('ok....->>>i am in '.__NAMESPACE__);
+    public function __destruct()
+    {
+        $this->disconnect();
     }
 
     abstract public function getDescription();
@@ -21,5 +24,7 @@ abstract class DataSource
 
     abstract public function connect();
 
-    abstract public function query();
+    abstract public function disconnect();
+
+    abstract public function query($sql);
 }
