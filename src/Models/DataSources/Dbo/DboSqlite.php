@@ -35,24 +35,20 @@ class DboSqlite extends DataSource
         $this->conn->close();
     }
 
-    public function query($sql)
+    public function query($querySql)
     {
-        $result = $this->conn->query($sql);
+        $result = $this->conn->query($querySql);
         $return = [];
-
         // change this
         if (false !== $result) {
-            while ($row = $result->fetchArray()) {
-                foreach ($row as $k => $data) {
-                    if (is_int($k)) {
-                        unset($row[$k]);
-                    }
-                }
+            $cols = $result->numColumns();
+            while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
                 $return[] = $row;
             }
         } else {
+            // just for the moment
             pr($this->conn->lastErrorMsg());
-            die("Error in query: <span style='color:red;'>$sql</span>");
+            die("Error in query: <span style='color:red;'>{$querySql}</span>");
         }
 
         return $return;
