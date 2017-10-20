@@ -7,7 +7,7 @@ abstract class DataSource
     public function __construct()
     {
         if (!$this->enable()) {
-            trigger_error($this->getDescription().' is not enable!');
+            trigger_error($this->getDescription().' is not enabled!');
         }
 
         $this->connect();
@@ -26,5 +26,5 @@ abstract class DataSource
 
     abstract public function disconnect();
 
-    abstract public function query($sql);
+    abstract public function query($querySql);
 }
