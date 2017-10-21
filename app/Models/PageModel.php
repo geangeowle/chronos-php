@@ -16,7 +16,7 @@ class PageModel extends AppModel
 
         $dadosSave = [
             // 'id' => '12',
-            'ds' => 'rr',
+            'ds' => 'rr'.rand(0, 1000),
             // 'dt' => null,
             // 'dt' => 'null',
             // 'ds2' => '',
@@ -26,17 +26,17 @@ class PageModel extends AppModel
             // 'fl_true' => true,
             // 'fl_false' => false,
         ];
-        // pr($this->save($dadosSave));
+        pr($this->save($dadosSave));
 
         pr('------------');
         $dadosUpd = [
-            'id_fk' => 'null',
-            'ds' => 'rr',
-            'nr' => 0,
-            'nr1' => '0',
-            'nr2' => -1,
-            'fl_true' => true,
-            'fl_false' => false,
+            // 'id_fk' => 'null',
+            'ds' => 'changed',
+            // 'nr' => 0,
+            // 'nr1' => '0',
+            // 'nr2' => -1,
+            // 'fl_true' => true,
+            // 'fl_false' => false,
         ];
         $where = [
             'id IN ( 1, 2) ',
@@ -44,6 +44,9 @@ class PageModel extends AppModel
             // "( id = 2 OR ds IN ('y', 'x'))",
         ];
         pr($this->save($dadosUpd, $where));
+
+        $this->del(4);
+        $this->del(null, $where);
 
         $dados = $this->find('all', [
             'conditions' => [
@@ -53,8 +56,9 @@ class PageModel extends AppModel
                 'Page.id', 'Page.ds',
             ],
             'order' => [
-                'Page.id DESC',
+                'Page.id ASC',
             ],
+            'limit' => 10,
         ]);
 
         pr($dados);
