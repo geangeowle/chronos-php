@@ -27,4 +27,6 @@ abstract class DataSource
     abstract public function disconnect();
 
     abstract public function query($querySql);
+
+    abstract public function fetch();
 }
