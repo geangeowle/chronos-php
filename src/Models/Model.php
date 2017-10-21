@@ -11,10 +11,7 @@ class Model extends App
     public $useTable = '';
     public $key = '';
 
-    // public function __construct()
-    // {
-    //     //pr('....');
-    // }
+    private $connectionManager;
 
     public function find($type, $options = [])
     {
@@ -55,6 +52,7 @@ class Model extends App
         }
 
         $result = $this->_execute($querySQL);
+        $result = $this->fetch();
 
         return $result;
     }
@@ -73,7 +71,6 @@ class Model extends App
         }
 
         foreach ($data as $k => $valor) {
-            var_dump($valor);
             if (is_string($valor)) {
                 $data[$k] = "'{$valor}'";
             } elseif (null === $valor) {
@@ -101,35 +98,55 @@ class Model extends App
 
             $camposSet = [];
             foreach ($campos as $k => $campo) {
-                //if (! empty($camposDefault[$campo]) || $camposDefault[$campo] !== "0") {
                 $camposSet[] = $campo.' = '.$valores[$k];
-                //}
             }
 
             $querySQL = sprintf(
-                'UPDATE SET %s WHERE '.$dsWhere,
+                'UPDATE %s SET %s WHERE '.$dsWhere,
+                $this->useTable,
                 implode(', ', $camposSet)
-                // $this->useTable,
-                // implode(', ', $campos),
-                // implode(', ', $valores)
             );
         }
 
-        // pr($querySQL);
+        $result = $this->_execute($querySQL);
+    }
+
+    public function del($id, $where = [])
+    {
+        $dsWhere = implode(' AND ', $where);
+        if (empty($where)) {
+            $dsWhere = $this->pk.' = '.$id;
+        }
+
+        $querySQL = sprintf(
+            'DELETE FROM %s WHERE '.$dsWhere,
+            $this->useTable
+        );
 
         $result = $this->_execute($querySQL);
+    }
+
+    private function fetch()
+    {
+        return $this->getConnectionResource()->fetch();
+    }
+
+    private function getConnectionResource()
+    {
+        if (null === $this->connectionManager) {
+            $this->connectionManager = new ConnectionManager($this->useDbConfig);
+        }
+        $connectionManagerDataSource = $this->connectionManager->getConnection($this->useDbConfig);
+
+        return $connectionManagerDataSource;
     }
 
     private function _execute($querySQL)
     {
         // pr('####### querySQL');
         // pr($querySQL);
-        $connectionManager = new ConnectionManager($this->useDbConfig);
-        $connectionManagerDataSource = $connectionManager->getConnection($this->useDbConfig);
-        $result = $connectionManagerDataSource->query($querySQL);
+        return $this->getConnectionResource()->query($querySQL);
         //pr($result);
         // pr([$this->name => $result]);
-
-        return $result;
     }
 }
