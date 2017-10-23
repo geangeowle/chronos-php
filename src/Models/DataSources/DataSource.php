@@ -4,6 +4,8 @@ namespace Chronos\Models\DataSources;
 
 abstract class DataSource
 {
+    private $connected = false;
+
     public function __construct()
     {
         if (!$this->enable()) {
@@ -29,4 +31,14 @@ abstract class DataSource
     abstract public function query($querySql);
 
     abstract public function fetch();
+
+    public function getConnected()
+    {
+        return $this->connected;
+    }
+
+    protected function setConnected($connected = false)
+    {
+        $this->connected = $connected;
+    }
 }
