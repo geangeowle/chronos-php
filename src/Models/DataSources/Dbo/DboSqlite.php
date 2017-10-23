@@ -9,9 +9,16 @@ class DboSqlite extends DataSource
     public $conn;
     private $description = 'Driver DboSqlite';
     private $extension = 'sqlite3';
+    private $config = [];
 
     private $connResource;
     private $results = [];
+
+    public function setConfig($newConfig = [])
+    {
+        // make validations on $newConfig
+        $this->config = $newConfig;
+    }
 
     public function getDescription()
     {
@@ -25,17 +32,24 @@ class DboSqlite extends DataSource
 
     public function connect()
     {
-        //$dbhandle = sqlite_open('db/test.db', 0666, $error);
-        //try {
-        $this->connResource = new \SQLite3('/var/www/html/public/test');
-        // } catch (Exception $e) {
-        //     die($e->getMessage());
-        // }
+        $status = true;
+
+        try {
+            // pr($this->config);
+            // die();
+            $this->connResource = new \SQLite3($this->config['database']);
+        } catch (Exception $e) {
+            $status = false;
+        }
+
+        return $status;
     }
 
     public function disconnect()
     {
-        $this->connResource->close();
+        if (null !== $this->connResource) {
+            $this->connResource->close();
+        }
     }
 
     public function query($querySql)
