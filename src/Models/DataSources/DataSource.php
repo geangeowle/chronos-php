@@ -9,14 +9,14 @@ abstract class DataSource
         if (!$this->enable()) {
             trigger_error($this->getDescription().' is not enabled!');
         }
-
-        $this->connect();
     }
 
     public function __destruct()
     {
         $this->disconnect();
     }
+
+    abstract public function setConfig($newConfig = []);
 
     abstract public function getDescription();
 
