@@ -17,13 +17,10 @@ class ConnectionManager
         // change this
         $this->config = [
             'default' => [
-                'datasource' => '_dbo',
-                'driver' => '_sqlite',
-                'host' => '_host',
-                'login' => '_login',
-                'password' => '_password',
-                'database' => '_database',
-                'prefix' => '_prefix',
+                'datasource' => 'dbo',
+                'driver' => 'sqlite',
+                'database' => '/var/www/html/public/test',
+                'prefix' => 'tb_',
             ],
             // 'default_another_server' => [
             //     'datasource' => '_dbo',
@@ -42,7 +39,9 @@ class ConnectionManager
                 $this->_connectionsPaths[$configName] = $this->_getConfigPaths($config);
 
                 $_namespace = $this->_connectionsPaths[$configName]['namespace'];
-                $this->_dataSources[$configName] = new $_namespace($config);
+                $this->_dataSources[$configName] = new $_namespace();
+                $this->_dataSources[$configName]->setConfig($config);
+                $this->_dataSources[$configName]->connect();
             }
 
             //pr($_this->_connectionsPaths);
