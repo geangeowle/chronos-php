@@ -32,17 +32,12 @@ class DboSqlite extends DataSource
 
     public function connect()
     {
-        $status = true;
-
         try {
-            // pr($this->config);
-            // die();
-            $this->connResource = new \SQLite3($this->config['database']);
+            $this->connResource = new \SQLite3($this->config['database'], SQLITE3_OPEN_READWRITE);
+            $this->setConnected(true);
         } catch (Exception $e) {
-            $status = false;
+            $this->setConnected(false);
         }
-
-        return $status;
     }
 
     public function disconnect()
