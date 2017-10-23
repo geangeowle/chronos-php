@@ -7,25 +7,9 @@ use Chronos\Models\DataSources\Dbo\DboSqlite;
  */
 class DboSqliteTest extends PHPUnit\Framework\TestCase
 {
-    /**
-     * [testEnable description].
-     *
-     * @return [type] [description]
-     */
-    public function testEnableReturnsEnable()
-    {
-        $config = [
-            'datasource' => 'dbo',
-            'driver' => 'sqlite',
-            'database' => '/var/www/html/public/test',
-            'prefix' => 'tb_',
-        ];
-        $dbo = new DboSqlite();
-        // $dbo->setConfig($config);
-        $this->assertTrue($dbo->enable());
-    }
+    private $dbo;
 
-    public function testConnectionReturnsConnected()
+    public function setUp()
     {
         $config = [
             'datasource' => 'dbo',
@@ -34,8 +18,18 @@ class DboSqliteTest extends PHPUnit\Framework\TestCase
             'prefix' => 'tb_',
         ];
 
-        $dbo = new DboSqlite();
-        $dbo->setConfig($config);
-        $this->assertTrue($dbo->connect());
+        $this->dbo = new DboSqlite();
+        $this->dbo->setConfig($config);
+        $this->dbo->connect();
+    }
+
+    public function testCheckExtensionReturnsEnabled()
+    {
+        $this->assertTrue($this->dbo->enable());
+    }
+
+    public function testCheckConnectionReturnsConnected()
+    {
+        $this->assertTrue($this->dbo->getConnected());
     }
 }
