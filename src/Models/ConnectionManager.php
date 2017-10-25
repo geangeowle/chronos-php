@@ -2,39 +2,39 @@
 
 namespace Chronos\Models;
 
+use Chronos\Utils\Configure;
 use Chronos\Utils\Inflector;
 
 class ConnectionManager
 {
     private $config;
+    private $useDbConfig;
     private $_dataSources = [];
     private $_connectionsPaths = [];
 
     public function __construct($useDbConfig)
     {
-        //pr('___ConnectionManager');
+        $this->useDbConfig = $useDbConfig;
+        $this->setDatabaseConfig();
+    }
 
-        // change this
-        $this->config = [
-            'default' => [
-                'datasource' => 'dbo',
-                'driver' => 'sqlite',
-                'database' => '/var/www/html/public/test',
-                'prefix' => 'tb_',
-            ],
-            // 'default_another_server' => [
-            //     'datasource' => '_dbo',
-            //     'driver' => '_mysqli',
-            //     'host' => '_host',
-            //     'login' => '_login',
-            //     'password' => '_password',
-            //     'database' => '_database',
-            //     'prefix' => '_prefix',
-            // ],
-        ];
+    public function getConnection($useDbConfig)
+    {
+        return $this->_dataSources[$useDbConfig];
+    }
 
-        // added this in parse function
-        if (!isset($_this->_dataSources[$useDbConfig])) {
+    private function setDatabaseConfig()
+    {
+        $pathApp = Configure::read('App.Path');
+        $pathFile = $pathApp.Configure::read('App.Database');
+        $this->config = require $pathFile;
+
+        $this->parseDatabaseConfig();
+    }
+
+    private function parseDatabaseConfig()
+    {
+        if (!isset($this->_dataSources[$this->useDbConfig])) {
             foreach ($this->config as $configName => $config) {
                 $this->_connectionsPaths[$configName] = $this->_getConfigPaths($config);
 
@@ -43,16 +43,7 @@ class ConnectionManager
                 $this->_dataSources[$configName]->setConfig($config);
                 $this->_dataSources[$configName]->connect();
             }
-
-            //pr($_this->_connectionsPaths);
         }
-
-        // return $this->_dataSources[$useDbConfig];
-    }
-
-    public function getConnection($useDbConfig)
-    {
-        return $this->_dataSources[$useDbConfig];
     }
 
     private function _getConfigPaths($config)
