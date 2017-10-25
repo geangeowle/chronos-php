@@ -2,6 +2,7 @@
 
 namespace Chronos\Base;
 
+use Chronos\Utils\Configure;
 use Chronos\Utils\Inflector;
 
 class App extends BaseObject
@@ -20,12 +21,8 @@ class App extends BaseObject
         ];
 
         $nameFile = Inflector::camelize($file.$paths[$type]['alias']);
-        $appConfig = $this->getConfig();
-        $pathCore = $appConfig['CHRONOS_PATH'].'/'.$paths[$type]['folder']."/{$nameFile}.php";
-        $pathApp = $appConfig['APP_PATH'].'/'.$paths[$type]['folder']."/{$nameFile}.php";
-
-        // pr($pathCore);
-        // pr($pathApp);
+        $pathApp = Configure::read('App.Path').'/'.$paths[$type]['folder']."/{$nameFile}.php";
+        $pathCore = Configure::read('Chronos.Path').'/'.$paths[$type]['folder']."/{$nameFile}.php";
 
         $baseNamespace = 'Chronos\\';
         $path = $pathCore;
