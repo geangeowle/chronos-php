@@ -3,6 +3,7 @@
 namespace Chronos\Views;
 
 use Chronos\Base\App;
+use Chronos\Utils\Configure;
 use Chronos\Utils\Inflector;
 
 class View extends App
@@ -10,38 +11,43 @@ class View extends App
     public $autoLayout = true;
     public $viewPath;
     public $viewVars = [];
-    public $layout = 'default';
     public $pageTitle = '';
+    private $layout = 'default';
+    private $output;
 
     public function __construct($controller)
     {
         if (is_object($controller)) {
             $this->viewPath = $controller->viewPath;
+            $this->viewVars = $controller->viewVars;
             $this->action = Inflector::underscore($controller->params['url']['action']);
             $this->params = $controller->params;
             $this->pageTitle = $controller->pageTitle;
-            if (isset($controller->layout)) {
-                $this->layout = $controller->layout;
-            }
-            $this->setConfig($controller->getConfig());
+
+            // if (isset($controller->layout)) {
+            //     $this->layout = $controller->layout;
+            // }
+
+            $this->setLayout($controller->getLayout());
         }
     }
 
-    public function render($action = null, $layout = null, $file = null)
+    public function setLayout($newLayout)
+    {
+        $this->layout = $newLayout;
+    }
+
+    public function render($action = null)
     {
         $out = null;
 
-        if (false !== $action && $viewFileName = $this->_getViewFileName($action)) {
-            $out = $this->_render($viewFileName, $this->viewVars);
-        }
-
-        if (null === $layout) {
-            $layout = $this->layout;
+        if (false !== $action) {
+            $out = $this->_render($this->_getViewFileName($action), $this->viewVars);
         }
 
         if (false !== $out) {
-            if ($layout && $this->autoLayout) {
-                $out = $this->renderLayout($out, $layout);
+            if ($this->autoLayout) {
+                $out = $this->renderLayout($out, $this->layout);
             }
         }
 
@@ -56,9 +62,9 @@ class View extends App
         include $___viewFn;
 
         $out = '';
-        $out .= "<!-- Start file: {$___viewFn} -->\n";
+        $out .= "<!-- Start file: Stored in {$___viewFn} -->\n";
         $out .= ob_get_clean();
-        $out .= "\n<!-- End file: {$___viewFn} -->";
+        $out .= "\n<!-- End file: Stored in {$___viewFn} -->";
 
         return $out;
     }
@@ -66,9 +72,9 @@ class View extends App
     public function renderLayout($content_for_layout, $layout = null)
     {
         $layoutFileName = $this->_getLayoutFileName($layout);
-        if (empty($layoutFileName)) {
-            return $this->output;
-        }
+        // if (empty($layoutFileName)) {
+        //     return $this->output;
+        // }
 
         if (!empty($this->pageTitle)) {
             //$pageTitle = 'APP_TITLE'.': '.$this->pageTitle;
@@ -91,9 +97,14 @@ class View extends App
     {
         $action = Inflector::underscore($action);
         $viewPath = Inflector::camelize($this->viewPath);
-        $appConfig = $this->getConfig();
-        $pathCore = $appConfig['CHRONOS_PATH'].'/Views/'.$viewPath.'/'.$action.'.php';
-        $pathApp = $appConfig['APP_PATH'].'/Views/'.$viewPath.'/'.$action.'.php';
+
+        $pathApp = Configure::read('App.Path');
+        $pathCore = Configure::read('Chronos.Path');
+        $pathViewFile = '/Views/'.$viewPath.'/'.$action.'.php';
+
+        $pathApp = $pathApp.$pathViewFile;
+        $pathCore = $pathCore.$pathViewFile;
+
         $path = (file_exists($pathApp)) ? $pathApp : $pathCore;
 
         return $path;
@@ -102,9 +113,14 @@ class View extends App
     public function _getLayoutFileName($action = null)
     {
         $action = Inflector::underscore($action);
-        $appConfig = $this->getConfig();
-        $pathCore = $appConfig['CHRONOS_PATH'].'/Views/Layouts/'.$action.'.php';
-        $pathApp = $appConfig['APP_PATH'].'/Views/Layouts/'.$action.'.php';
+
+        $pathApp = Configure::read('App.Path');
+        $pathCore = Configure::read('Chronos.Path');
+        $pathViewFile = '/Views/Layouts/'.$action.'.php';
+
+        $pathApp = $pathApp.$pathViewFile;
+        $pathCore = $pathCore.$pathViewFile;
+
         $path = (file_exists($pathApp)) ? $pathApp : $pathCore;
 
         return $path;
