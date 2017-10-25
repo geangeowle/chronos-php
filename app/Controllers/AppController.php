@@ -6,9 +6,9 @@ use Chronos\Controllers\Controller;
 
 abstract class AppController extends Controller
 {
-    public function __construct($newConfig = [])
+    public function __construct()
     {
-        parent::__construct($newConfig);
+        parent::__construct();
         $this->init();
     }
 
