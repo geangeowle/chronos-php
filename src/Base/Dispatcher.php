@@ -50,7 +50,6 @@ final class Dispatcher extends App
         $this->params = Router::parse($this->url);
         $objController = $this->__getController();
         $objController->params = $this->params;
-        $objController->setConfig($this->getConfig());
 
         return $this->_invoke($objController, $this->params);
     }
