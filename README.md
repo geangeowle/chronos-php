@@ -1,3 +1,4 @@
 # ChronosPHP
 Very Small Lite Framework for PHP
-Under development
+
+:boom: Under development :boom:
