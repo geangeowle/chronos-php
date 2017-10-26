@@ -1,10 +1,11 @@
 <?php
 
-return[
+return
+[
     'default' => [
         'datasource' => 'dbo',
         'driver' => 'sqlite',
-        'database' => '/var/www/html/public/test',
+        'database' => dirname(dirname(__DIR__)).'/public/test',
         'prefix' => 'tb_',
     ],
 ];

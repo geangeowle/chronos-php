@@ -16,7 +16,7 @@ xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/6.0/phpunit.xsd"
     </testsuites>
 
     <filter>
-        <whitelist addUncoveredFilesFromWhitelist="false">
+        <whitelist>
             <directory>./tests</directory>
         </whitelist>
     </filter>
@@ -26,6 +26,7 @@ xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/6.0/phpunit.xsd"
         <log type="coverage-clover" target="build/logs/clover.xml"/>
         <log type="coverage-html" target="build/coverage" charset="UTF-8" yui="true" highlight="true" lowUpperBound="35" highLowerBound="70" />
         <log type="testdox-text" target="build/testdox/executed.txt"/>
+        <log type="coverage-php" target="build/coverage-php.php" />
     </logging>
 
 </phpunit>
