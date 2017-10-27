@@ -12,6 +12,7 @@ class Model extends App
     public $key = '';
 
     private $connectionManager;
+    private $lastQuery = '';
 
     public function find($type, $options = [])
     {
@@ -126,6 +127,11 @@ class Model extends App
         $result = $this->_execute($querySQL);
     }
 
+    public function getLastQuery()
+    {
+        return $this->lastQuery;
+    }
+
     private function fetch()
     {
         return $this->getConnectionResource()->fetch();
@@ -143,6 +149,7 @@ class Model extends App
 
     private function _execute($querySQL)
     {
+        $this->lastQuery = $querySQL;
         // pr('####### querySQL');
         // pr($querySQL);
         return $this->getConnectionResource()->query($querySQL);
