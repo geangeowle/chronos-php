@@ -31,13 +31,10 @@ class App extends BaseObject
             $path = $pathApp;
         }
 
-        // pr($path);
-
         $statusImport = false;
-        //if (file_exists($path)) {
         require_once $path;
         $statusImport = true;
-        //}
+
         $dsNamespace = $baseNamespace.$paths[$type]['folder'];
 
         return $dsNamespace;

@@ -33,12 +33,8 @@ class Controller extends App
 
     public function render($action = null, $layout = null, $file = null)
     {
-        //$this->beforeRender();
-        //$viewClass = $this->view;
         $viewClass = "Chronos\Views\View";
-
         $view = new $viewClass($this);
-
         $this->autoRender = false;
         $this->output .= $view->render($action, $layout, $file);
 

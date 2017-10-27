@@ -23,11 +23,6 @@ class View extends App
             $this->action = Inflector::underscore($controller->params['url']['action']);
             $this->params = $controller->params;
             $this->pageTitle = $controller->pageTitle;
-
-            // if (isset($controller->layout)) {
-            //     $this->layout = $controller->layout;
-            // }
-
             $this->setLayout($controller->getLayout());
         }
     }
