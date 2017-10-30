@@ -14,6 +14,7 @@ class View extends App
     public $pageTitle = '';
     private $layout = 'default';
     private $output;
+    private $renderEngine = 'default';
 
     public function __construct($controller)
     {
@@ -35,7 +36,10 @@ class View extends App
     public function render($action = null)
     {
         $out = null;
+        $objRenderEngine = new RenderEngine();
+        $out = $objRenderEngine->renderLayout();
 
+        return $out;
         if (false !== $action) {
             $out = $this->_render($this->_getViewFileName($action), $this->viewVars);
         }
