@@ -36,8 +36,10 @@ class View extends App
     public function render($action = null)
     {
         $out = null;
-        $objRenderEngine = new RenderEngine();
-        $out = $objRenderEngine->renderLayout();
+        $objRenderEngine = new Engine(new Render\RenderTwig());
+        $objRenderEngine->setViewVars($this->viewVars);
+        $out = $objRenderEngine->render();
+        //$out = $objRenderEngine->renderLayout();
 
         return $out;
         if (false !== $action) {
