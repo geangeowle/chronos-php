@@ -11,12 +11,12 @@ class PageController extends AppController
 
     public function init()
     {
-        $n = (new PageModel())->r();
-        // $n = (new UserModel())->r();
+        //$n = (new PageModel())->r();
     }
 
     public function index()
     {
+        $this->set('varX', 'dataX');
     }
 
     public function getX()
