@@ -1,8 +1,10 @@
 <?php
 
-    use Chronos\Utils\Configure;
+use Chronos\Utils\Configure;
 
-    Configure::write('App.Path', dirname(dirname(__DIR__)).'/app');
-    Configure::write('Chronos.Path', dirname(dirname(__DIR__)).'/src');
+Configure::write('App.Path', dirname(dirname(__DIR__)).'/app');
+Configure::write('Chronos.Path', dirname(dirname(__DIR__)).'/src');
 
-    Configure::write('App.Database', '/Config/ConfigDatabases.php');
+Configure::write('App.RenderEngine', 'Twig');
+
+Configure::write('App.Database', '/Config/ConfigDatabases.php');
