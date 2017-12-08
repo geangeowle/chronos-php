@@ -22,11 +22,11 @@
     "repositories": [
         {
             "type": "git",
-            "url": "https://github.com/geangeowle/ChronosPHP"
+            "url": "https://github.com/geangeowle/chronos-php"
         }
     ],
     "require": {
-      "php": ">=5.3.3",
+        "php": ">=5.3.3",
         "twig/twig": "^2.0"
     },
     "autoload": {
