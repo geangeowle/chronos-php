@@ -16,6 +16,14 @@ services:
       - "8071:80"
     networks:
       - sdnet
+  server-php72:
+    image: php:7.2-apache
+    volumes:
+      - .:/var/www/html/
+    ports:
+      - "8072:80"
+    networks:
+      - sdnet
 networks:
   sdnet:
     driver: "bridge"
