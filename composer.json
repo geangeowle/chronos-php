@@ -27,8 +27,7 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "twig/twig": "^2.0",
-        "geangeowle/chronos-php": "dev-master"
+        "twig/twig": "^2.0"
     },
     "autoload": {
       "psr-4": {
