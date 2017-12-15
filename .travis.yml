@@ -6,4 +6,9 @@ install:
   - composer update && composer dump-autoload
 before_script:
   - npm install
-script: vendor/bin/phpunit --testsuite CoreTestUnitSuite
+  - mkdir -p build/logs
+script:
+  - vendor/bin/phpunit --testsuite CoreTestUnitSuite
+  - vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+after_success:
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then php vendor/bin/coveralls -v; fi;'
