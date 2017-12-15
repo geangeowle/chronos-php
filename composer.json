@@ -27,8 +27,7 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "twig/twig": "^2.0",
-        "php-coveralls/php-coveralls": "^2.0"
+        "twig/twig": "^2.0"
     },
     "autoload": {
       "psr-4": {
@@ -41,6 +40,7 @@
         "phpunit/phpunit": "^6.2",
         "phpunit/php-code-coverage": "^5.2",
         "phpmd/phpmd": "^2.6",
-        "evert/phpdoc-md": "^0.2.0"
+        "evert/phpdoc-md": "^0.2.0",
+        "php-coveralls/php-coveralls": "^2.0"
     }
 }
