@@ -5,7 +5,7 @@ namespace Chronos;
 use Chronos\Base\BaseObject;
 use Chronos\Base\Dispatcher;
 
-require_once 'basics.php';
+require_once 'functions.php';
 
 final class Chronos extends BaseObject
 {
