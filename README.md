@@ -2,6 +2,7 @@
 Very Small Lite Framework for PHP
 
 [![Build Status](https://travis-ci.org/geangeowle/chronos-php.svg?branch=master)](https://travis-ci.org/geangeowle/chronos-php)
+[![Coverage Status](https://coveralls.io/repos/github/geangeowle/chronos-php/badge.svg?branch=master)](https://coveralls.io/github/geangeowle/chronos-php?branch=master)
 
 :boom: Under development! :boom:
 
