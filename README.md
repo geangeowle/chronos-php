@@ -13,4 +13,5 @@ To run the library, follow these steps:
 ## Setup for testing
 To test the library, follow these steps:
  1. Copy file `phpunit.xml.dist` to `phpunit.xml`
- 2. Run `./vendor/bin/phpunit` from project directory
+ 2. Copy file `.php_cs.dist` to `.php_cs`
+ 3. Run `./vendor/bin/phpunit` from project directory
