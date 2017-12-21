@@ -36,7 +36,9 @@ class View extends App
     public function render($action = null)
     {
         $out = null;
-        $objRenderEngine = new Engine(new Render\RenderTwig());
+
+        $dsRender = '\\Chronos\\Views\\Render\\Render'.Configure::read('App.RenderEngine');
+        $objRenderEngine = new Engine(new $dsRender());
         $objRenderEngine->setViewVars($this->viewVars);
         $out = $objRenderEngine->render();
         //$out = $objRenderEngine->renderLayout();
