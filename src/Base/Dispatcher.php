@@ -19,11 +19,12 @@ final class Dispatcher extends App
     {
         //pr($this->params);
         $ctrlClassName = $this->__loadController($this->params);
-        $ctrlClass = 'App\\Controllers\\'.$ctrlClassName;
+        $dsNamespace = Inflector::camelize($this->params['url']['namespace']);
+        $ctrlClass = "{$dsNamespace}\\Controllers\\{$ctrlClassName}";
         //pr($ctrlClass);
-        if ('App\\Controllers\\ErrorController' === $ctrlClass) {
-            $ctrlClass = 'Chronos\\Controllers\\'.$ctrlClassName;
-        }
+        // if ('App\\Controllers\\ErrorController' === $ctrlClass) {
+        //     $ctrlClass = 'Chronos\\Controllers\\'.$ctrlClassName;
+        // }
         if (!class_exists($ctrlClass)) {
             $this->redirect("http://localhost:8056/public/?url=error/missingClass/{$ctrlClassName}");
             // $this->url = '/error/missingClass/'.$ctrlClassName;
@@ -49,6 +50,9 @@ final class Dispatcher extends App
     {
         $this->params = Router::parse($this->url);
         $objController = $this->__getController();
+        //pr($this->url);
+        //pr($this->params);
+        //die('...');
         $objController->params = $this->params;
 
         return $this->_invoke($objController, $this->params);

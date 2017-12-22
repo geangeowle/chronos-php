@@ -27,7 +27,7 @@ class App extends BaseObject
         $baseNamespace = 'Chronos\\';
         $path = $pathCore;
         if (file_exists($pathApp)) {
-            $baseNamespace = 'App\\';
+            $baseNamespace = Configure::read('App.Namespace').'\\';
             $path = $pathApp;
         }
 

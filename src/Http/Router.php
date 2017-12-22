@@ -9,21 +9,24 @@ final class Router
         $returnDefault = [
             'url' => [
                 'path' => 'controller',
-                'controller' => 'Page',
+                'namespace' => 'app',
+                'controller' => 'page',
                 'action' => 'index',
                 'params' => [],
             ],
         ];
 
-        if ($url && strpos($url, '/') !== 0) {
+        if ($url && 0 !== strpos($url, '/')) {
             $url = '/'.$url;
         }
-        if (strpos($url, '?') !== false) {
+        if (false !== strpos($url, '?')) {
             $url = substr($url, 0, strpos($url, '?'));
         }
+
         if (!empty($url)) {
             $list = explode('/', $url);
 
+            //$returnDefault['url']['namespace'] = $list[1];
             $returnDefault['url']['controller'] = $list[1];
             $returnDefault['url']['path'] = 'app';
             unset($list[0], $list[1]);
@@ -32,6 +35,7 @@ final class Router
                 $returnDefault['url']['action'] = $list[2];
                 unset($list[2]);
             }
+
             foreach ($list as $key => $vl) {
                 if (!empty($vl)) {
                     $returnDefault['url']['params'][] = $vl;
