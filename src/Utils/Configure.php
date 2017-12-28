@@ -36,10 +36,16 @@ class Configure
                 $_this->{$name[0]} = $value;
             }
         }
+
+        return true;
     }
 
-    public static function read($var)
+    public static function read($var = null)
     {
+        if (null === $var) {
+            return null;
+        }
+
         $_this = &self::getInstance();
 
         $name = explode('.', $var);
@@ -63,7 +69,5 @@ class Configure
 
                 break;
         }
-
-        return null;
     }
 }
