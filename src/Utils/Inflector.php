@@ -6,36 +6,25 @@ class Inflector
 {
     public static function underscore($string)
     {
-        return strtolower(preg_replace('/(?<=\\w)([A-Z])/', '_\\1', $string));
+        return self::delimit(str_replace('-', '_', $string), '_');
     }
 
-    public static function humanize($string)
+    public static function humanize($string, $delimiter = '_')
     {
-        return ucwords(str_replace('_', ' ', $string));
+        return ucwords(str_replace($delimiter, ' ', str_replace('-', '_', $string)));
     }
 
-    public static function camelize($string)
+    public static function camelize($string, $delimiter = '_')
     {
-        return str_replace(' ', '', self::humanize($string));
+        $result = str_replace(' ', '', self::humanize($string));
+
+        return $result;
     }
 
-    public static function _underscore($string)
+    public static function delimit($string, $delimiter = '_')
     {
-        return self::underscore(self::camelize($string));
-    }
+        $result = strtolower(preg_replace('/(?<=\\w)([A-Z])/', $delimiter.'\\1', $string));
 
-    public static function _humanize($string)
-    {
-        return self::humanize(self::underscore($string));
-    }
-
-    public static function _camelize($string)
-    {
-        return self::camelize(self::underscore($string));
-    }
-
-    public static function lCamelize($string)
-    {
-        return lcfirst(self::camelize($string));
+        return $result;
     }
 }
