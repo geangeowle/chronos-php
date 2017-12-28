@@ -91,15 +91,4 @@ class InflectorTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('', Inflector::delimit(false));
         $this->assertSame('p@ss_w0rd', Inflector::delimit('P@ssW0rd'));
     }
-
-    public function testCheckAllMethodsHasTest()
-    {
-        $methodsOfInflectorClass = get_class_methods(Inflector::class);
-        foreach ($methodsOfInflectorClass as $k => $methodOfInflectorClass) {
-            $method = 'test'.ucwords($methodOfInflectorClass);
-            $message = 'Is missing test of '.$methodOfInflectorClass;
-            $isCallable = is_callable([$this, $method]);
-            $this->assertTrue($isCallable, $message);
-        }
-    }
 }
