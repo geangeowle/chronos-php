@@ -5,7 +5,7 @@ namespace Chronos\Test\Unit\Utils;
 use Chronos\TestSuite\ChronosTestCase;
 use Chronos\Utils\Configure;
 
-class ConfigureTest extends ChronosTestCase //\PHPUnit\Framework\TestCase
+class ConfigureTest extends ChronosTestCase
 {
     public function setUp()
     {
