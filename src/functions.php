@@ -10,7 +10,9 @@ if (!function_exists('pr')) {
      */
     function pr($var)
     {
-        $template = '<pre>%s</pre>';
-        printf($template, print_r($var, true));
+        $template = (PHP_SAPI !== 'cli') ? '<pre>%s</pre>' : "\n%s\n\n";
+        printf($template, trim(print_r($var, true)));
+
+        return $var;
     }
 }
