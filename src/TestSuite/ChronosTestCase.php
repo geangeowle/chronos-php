@@ -10,6 +10,12 @@ class ChronosTestCase extends BaseTestCase
 
     public function testCheckAllMethodsHasTest()
     {
+        if (null === $this->classOfTest) {
+            $this->assertNull($this->classOfTest);
+
+            return;
+        }
+
         $methodsOfClassTest = get_class_methods($this->classOfTest);
         foreach ($methodsOfClassTest as $k => $methodOfClassTest) {
             $method = 'test'.ucwords($methodOfClassTest);
