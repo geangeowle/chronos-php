@@ -2,10 +2,16 @@
 
 namespace Chronos\Test\Unit\Utils;
 
+use Chronos\TestSuite\ChronosTestCase;
 use Chronos\Utils\Inflector;
 
-class InflectorTest extends \PHPUnit\Framework\TestCase
+class InflectorTest extends ChronosTestCase
 {
+    public function setUp()
+    {
+        $this->setClassOfTest(Inflector::class);
+    }
+
     /**
      * testUnderscore method.
      */
