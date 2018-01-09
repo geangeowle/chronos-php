@@ -6,18 +6,18 @@ class Configure
 {
     private static $instance = null;
 
-    public static function &getInstance()
+    public static function getInstance()
     {
-        if (null === self::$instance) {
-            self::$instance = new self();
+        if (null === static::$instance) {
+            static::$instance = new static();
         }
 
-        return self::$instance;
+        return static::$instance;
     }
 
     public static function write($config, $value = null)
     {
-        $_this = &self::getInstance();
+        $_this = static::getInstance();
 
         if (!is_array($config)) {
             $config = [
@@ -46,7 +46,7 @@ class Configure
             return null;
         }
 
-        $_this = &self::getInstance();
+        $_this = static::getInstance();
 
         $name = explode('.', $var);
         switch (count($name)) {
