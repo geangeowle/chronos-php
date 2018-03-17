@@ -8,6 +8,14 @@ services:
       - "8056:80"
     networks:
       - sdnet
+  server-php70:
+    image: php:7.0-apache
+    volumes:
+      - .:/var/www/html/
+    ports:
+      - "8070:80"
+    networks:
+      - sdnet
   server-php71:
     image: php:7.1-apache
     volumes:
