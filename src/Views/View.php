@@ -37,6 +37,8 @@ class View extends App
     {
         $out = null;
 
+        $this->viewVars['title'] = $this->pageTitle;
+
         $dsRender = '\\Chronos\\Views\\Render\\Render'.Configure::read('App.RenderEngine');
         $objRenderEngine = new Engine(new $dsRender());
         $objRenderEngine->setViewVars($this->viewVars);

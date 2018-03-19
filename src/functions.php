@@ -1,12 +1,17 @@
 <?php
+/**
+ * 
+ */
 
 if (!function_exists('pr')) {
     /**
-     * print_r convenience function.
+     * Convenience function print_r.
      *
      * Will wrap <pre> tags around the output of given.
      *
      * @param mixed $var Variable to print out
+     * 
+     * @return $var
      */
     function pr($var)
     {

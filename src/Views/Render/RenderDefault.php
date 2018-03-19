@@ -17,7 +17,7 @@ class RenderDefault implements BaseRender
 
     public function render()
     {
-        $this->viewVars['title'] = 'ChronosPHP';
+        //$this->viewVars['title'] = 'chronosPHP';
         pr($this->viewVars);
 
         $viewPath = 'Page';
