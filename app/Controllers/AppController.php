@@ -6,13 +6,15 @@ use Chronos\Controllers\Controller;
 
 abstract class AppController extends Controller
 {
+    public $pageTitle = 'chronosPHP 1.x';
+
     public function __construct()
     {
         parent::__construct();
-        $this->init();
+        $this->initialize();
     }
 
-    abstract public function init();
+    abstract public function initialize();
 
     abstract public function index();
 }

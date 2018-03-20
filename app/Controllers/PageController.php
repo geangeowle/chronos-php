@@ -7,11 +7,12 @@ use App\Models\PageModel;
 class PageController extends AppController
 {
     public $name = 'Page';
-    public $pageTitle = 'ChronosPHP';
+    protected $Page;
 
-    public function init()
+    public function initialize()
     {
-        //$n = (new PageModel())->r();
+        $this->Page = new PageModel();
+        //$this->Page->read();
     }
 
     public function index()

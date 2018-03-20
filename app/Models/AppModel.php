@@ -6,5 +6,13 @@ use Chronos\Models\Model;
 
 abstract class AppModel extends Model
 {
-    abstract public function r();
+    public function __construct()
+    {
+        parent::__construct();
+        $this->initialize();
+    }
+
+    abstract public function initialize();
+
+    abstract public function read();
 }

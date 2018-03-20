@@ -8,7 +8,11 @@ class PageModel extends AppModel
     public $useTable = 'tb_page';
     public $pk = 'id';
 
-    public function r()
+    public function initialize()
+    {
+    }
+
+    public function read()
     {
         //$n = (new PageTestModel())->r();
         //$
