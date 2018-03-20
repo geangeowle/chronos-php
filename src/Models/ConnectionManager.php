@@ -9,8 +9,8 @@ class ConnectionManager
 {
     private $config;
     private $useDbConfig;
-    private $_dataSources = [];
-    private $_connectionsPaths = [];
+    private $dataSources = [];
+    private $connectionsPaths = [];
 
     public function __construct($useDbConfig)
     {
@@ -20,7 +20,7 @@ class ConnectionManager
 
     public function getConnection($useDbConfig)
     {
-        return $this->_dataSources[$useDbConfig];
+        return $this->dataSources[$useDbConfig];
     }
 
     private function setDatabaseConfig()
@@ -34,19 +34,19 @@ class ConnectionManager
 
     private function parseDatabaseConfig()
     {
-        if (!isset($this->_dataSources[$this->useDbConfig])) {
+        if (!isset($this->dataSources[$this->useDbConfig])) {
             foreach ($this->config as $configName => $config) {
-                $this->_connectionsPaths[$configName] = $this->_getConfigPaths($config);
+                $this->connectionsPaths[$configName] = $this->getConfigPaths($config);
 
-                $_namespace = $this->_connectionsPaths[$configName]['namespace'];
-                $this->_dataSources[$configName] = new $_namespace();
-                $this->_dataSources[$configName]->setConfig($config);
-                $this->_dataSources[$configName]->connect();
+                $_namespace = $this->connectionsPaths[$configName]['namespace'];
+                $this->dataSources[$configName] = new $_namespace();
+                $this->dataSources[$configName]->setConfig($config);
+                $this->dataSources[$configName]->connect();
             }
         }
     }
 
-    private function _getConfigPaths($config)
+    private function getConfigPaths($config)
     {
         $filename = '';
         $classname = '';

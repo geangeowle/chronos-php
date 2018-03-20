@@ -6,13 +6,18 @@ use Chronos\Base\App;
 
 class Model extends App
 {
-    public $useDbConfig = 'default';
-    public $name = '';
-    public $useTable = '';
-    public $key = '';
+    protected $name = '';
+
+    private $useTable = '';
+    private $key = '';
+    private $useDbConfig = 'default';
 
     private $connectionManager;
     private $lastQuery = '';
+
+    public function __construct()
+    {
+    }
 
     public function find($type, $options = [])
     {
@@ -52,7 +57,7 @@ class Model extends App
             $querySQL .= sprintf('LIMIT %s ', $options['limit']);
         }
 
-        $result = $this->_execute($querySQL);
+        $result = $this->executeQuery($querySQL);
         $result = $this->fetch();
 
         return $result;
@@ -109,7 +114,7 @@ class Model extends App
             );
         }
 
-        $result = $this->_execute($querySQL);
+        $result = $this->executeQuery($querySQL);
     }
 
     public function del($id, $where = [])
@@ -124,7 +129,7 @@ class Model extends App
             $this->useTable
         );
 
-        $result = $this->_execute($querySQL);
+        $result = $this->executeQuery($querySQL);
     }
 
     public function getLastQuery()
@@ -147,7 +152,7 @@ class Model extends App
         return $connectionManagerDataSource;
     }
 
-    private function _execute($querySQL)
+    private function executeQuery($querySQL)
     {
         $this->lastQuery = $querySQL;
         // pr('####### querySQL');

@@ -26,11 +26,12 @@ final class Dispatcher extends App
         //     $ctrlClass = 'Chronos\\Controllers\\'.$ctrlClassName;
         // }
         if (!class_exists($ctrlClass)) {
-            $this->redirect("http://localhost:8056/public/?url=error/missingClass/{$ctrlClassName}");
+            //$this->redirect("http://localhost:8056/public/?url=error/missingClass/{$ctrlClassName}");
             // $this->url = '/error/missingClass/'.$ctrlClassName;
             // $this->params = Router::parse($this->url);
-            // // echo '<pre>';
-            // // print_r($this->params);
+            echo '<pre>';
+            print_r($this->params);
+            die('!class_exists -> '.$ctrlClassName);
             // $ctrlClass = 'Chronos\\Controllers\\'.$this->__loadController($this->params);
         }
         $objController = new $ctrlClass();
@@ -55,10 +56,10 @@ final class Dispatcher extends App
         //die('...');
         $objController->params = $this->params;
 
-        return $this->_invoke($objController, $this->params);
+        return $this->invokeMethod($objController, $this->params);
     }
 
-    public function _invoke(&$controller, $params)
+    private function invokeMethod(&$controller, $params)
     {
         if (method_exists($controller, 'dispatchMethod')) {
             $output = $controller->dispatchMethod($params['url']['action'], $params['url']['params']);
