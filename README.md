@@ -9,7 +9,7 @@ Very Small Lite Framework for PHP
 
 ## Setup
 To run the library, follow these steps:
- 1. Run `composer update && composer dump-autoload`
+ 1. Run `composer install`
  2. Run `npm install`
 
 ## Setup for testing
