@@ -8,8 +8,8 @@ class Model extends App
 {
     protected $name = '';
 
-    private $useTable = '';
-    private $key = '';
+    protected $useTable = '';
+    protected $key = '';
     private $useDbConfig = 'default';
 
     private $connectionManager;

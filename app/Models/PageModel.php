@@ -5,8 +5,8 @@ namespace App\Models;
 class PageModel extends AppModel
 {
     public $name = 'Page';
-    public $useTable = 'tb_page';
-    public $pk = 'id';
+    protected $useTable = 'tb_page';
+    protected $pk = 'id';
 
     public function initialize()
     {
@@ -62,7 +62,7 @@ class PageModel extends AppModel
             'order' => [
                 'Page.id ASC',
             ],
-            'limit' => 10,
+            //'limit' => 10,
         ]);
 
         pr($dados);

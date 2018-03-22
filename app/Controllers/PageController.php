@@ -12,7 +12,6 @@ class PageController extends AppController
     public function initialize()
     {
         $this->Page = new PageModel();
-        //$this->Page->read();
     }
 
     public function index()
@@ -22,6 +21,11 @@ class PageController extends AppController
 
     public function getX()
     {
+        //$this->Page->read();
+        pr('------------');
+        pr($this->data);
+        pr('------------');
+
         return 1;
     }
 }
