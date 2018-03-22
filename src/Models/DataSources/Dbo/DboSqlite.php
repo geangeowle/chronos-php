@@ -33,6 +33,10 @@ class DboSqlite extends DataSource
     public function connect()
     {
         try {
+            if (!file_exists($this->config['database'])) {
+                //new \SQLite3($this->config['database']);
+                trigger_error('File is missing ['.$this->config['database'].']'.PHP_EOL, E_USER_ERROR);
+            }
             $this->connResource = new \SQLite3($this->config['database'], SQLITE3_OPEN_READWRITE);
             $this->setConnected(true);
         } catch (Exception $e) {

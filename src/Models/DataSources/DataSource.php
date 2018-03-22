@@ -8,9 +8,9 @@ abstract class DataSource
 
     public function __construct()
     {
-        if (!$this->enable()) {
-            trigger_error($this->getDescription().' is not enabled!');
-        }
+        // if (!$this->enable()) {
+        //     trigger_error($this->getDescription().' is not enabled!'.PHP_EOL, E_USER_ERROR);
+        // }
     }
 
     public function __destruct()
