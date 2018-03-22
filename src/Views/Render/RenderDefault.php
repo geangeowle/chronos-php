@@ -3,11 +3,13 @@
 namespace Chronos\Views\Render;
 
 use Chronos\Utils\Configure;
+use Chronos\Utils\Inflector;
 use Chronos\Views\BaseRender;
 use Chronos\Views\Form;
 
 class RenderDefault implements BaseRender
 {
+    private $params = [];
     private $viewVars = [];
 
     public function setViewVars($viewVars)
@@ -15,13 +17,19 @@ class RenderDefault implements BaseRender
         $this->viewVars = $viewVars;
     }
 
+    public function setParams($params)
+    {
+        $this->params = $params;
+    }
+
     public function render()
     {
         //$this->viewVars['title'] = 'chronosPHP';
         pr($this->viewVars);
+        pr($this->params);
 
-        $viewPath = 'Page';
-        $action = 'Page/index';
+        $viewPath = Inflector::camelize($this->params['url']['controller']);
+        $action = $viewPath.'/'.Inflector::underscore($this->params['url']['action']);
         $pathApp = Configure::read('App.Path');
         $pathCore = Configure::read('Chronos.Path');
         $pathViewFile = '/Views/'; //.$viewPath.'/'; //.$action.'.php';
@@ -37,7 +45,7 @@ class RenderDefault implements BaseRender
 
         $Form = new Form();
 
-        include $path;
+        require $path;
 
         $out = '';
         $out .= "<!-- Start file: Stored in {$path} -->\n";
@@ -71,7 +79,7 @@ class RenderDefault implements BaseRender
 
         $Form = new Form();
 
-        include $path;
+        require $path;
 
         $out = '';
         $out .= "<!-- Start file: Stored in {$path} -->\n";

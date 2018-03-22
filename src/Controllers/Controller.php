@@ -12,6 +12,7 @@ class Controller extends App
     public $viewPath;
     public $viewVars = [];
     public $output;
+    protected $params = [];
     private $layout = 'default';
 
     public function __construct()
@@ -44,5 +45,15 @@ class Controller extends App
     public function set($var, $value)
     {
         $this->viewVars[$var] = $value;
+    }
+
+    public function setParams(array $params)
+    {
+        $this->params = $params;
+    }
+
+    public function getParams()
+    {
+        return $this->params;
     }
 }

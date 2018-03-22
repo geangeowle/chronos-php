@@ -8,11 +8,17 @@ use Chronos\Views\Form;
 
 class RenderTwig implements BaseRender
 {
+    private $params = [];
     private $viewVars = [];
 
     public function setViewVars($viewVars)
     {
         $this->viewVars = $viewVars;
+    }
+
+    public function setParams($params)
+    {
+        $this->params = $params;
     }
 
     public function render()

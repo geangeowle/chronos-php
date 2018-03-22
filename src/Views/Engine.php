@@ -5,6 +5,7 @@ namespace Chronos\Views;
 class Engine
 {
     private $viewVars = [];
+    private $params = [];
     private $objRender;
 
     public function __construct(BaseRender $render)
@@ -18,9 +19,15 @@ class Engine
         $this->viewVars['PHP_VERSION'] = PHP_VERSION;
     }
 
+    public function setParams($params)
+    {
+        $this->params = $params;
+    }
+
     public function render()
     {
         $out = '';
+        $this->objRender->setParams($this->params);
         $this->objRender->setViewVars($this->viewVars);
         $out = $this->objRender->render();
 
