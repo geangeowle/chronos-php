@@ -7,7 +7,7 @@ use Chronos\Utils\Inflector;
 
 final class Dispatcher extends App
 {
-    public $url;
+    private $url;
     private $params;
 
     public function __construct($url = null)
@@ -15,10 +15,30 @@ final class Dispatcher extends App
         $this->url = (isset($_GET['url'])) ? $_GET['url'] : $url;
     }
 
-    private function __getController()
+    public function dispatch()
+    {
+        $this->params = Router::parse($this->url);
+        $objController = $this->getControllerInstance();
+        //pr($this->url);
+        //pr($this->params);
+        //die('...');
+        $objController->setParams($this->params);
+
+        return $this->invokeMethod($objController, $this->params);
+    }
+
+    private function getControllerFile($params)
+    {
+        $name = $params['url']['controller'];
+        $this->import('Controller', $name);
+
+        return Inflector::camelize($name.'_controller');
+    }
+
+    private function getControllerInstance()
     {
         //pr($this->params);
-        $ctrlClassName = $this->__loadController($this->params);
+        $ctrlClassName = $this->getControllerFile($this->params);
         $dsNamespace = Inflector::camelize($this->params['url']['namespace']);
         $ctrlClass = "{$dsNamespace}\\Controllers\\{$ctrlClassName}";
         //pr($ctrlClass);
@@ -37,26 +57,6 @@ final class Dispatcher extends App
         $objController = new $ctrlClass();
 
         return $objController;
-    }
-
-    private function __loadController($params)
-    {
-        $name = $params['url']['controller'];
-        $this->import('Controller', $name);
-
-        return Inflector::camelize($name.'_controller');
-    }
-
-    public function dispatch()
-    {
-        $this->params = Router::parse($this->url);
-        $objController = $this->__getController();
-        //pr($this->url);
-        //pr($this->params);
-        //die('...');
-        $objController->params = $this->params;
-
-        return $this->invokeMethod($objController, $this->params);
     }
 
     private function invokeMethod(&$controller, $params)

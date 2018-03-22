@@ -19,10 +19,11 @@ class View extends App
     public function __construct($controller)
     {
         if (is_object($controller)) {
+            $params = $controller->getParams();
             $this->viewPath = $controller->viewPath;
             $this->viewVars = $controller->viewVars;
-            $this->action = Inflector::underscore($controller->params['url']['action']);
-            $this->params = $controller->params;
+            $this->action = Inflector::underscore($params['url']['action']);
+            $this->params = $params;
             $this->pageTitle = $controller->pageTitle;
             $this->setLayout($controller->getLayout());
         }
@@ -41,13 +42,14 @@ class View extends App
 
         $dsRender = '\\Chronos\\Views\\Render\\Render'.Configure::read('App.RenderEngine');
         $objRenderEngine = new Engine(new $dsRender());
+        $objRenderEngine->setParams($this->params);
         $objRenderEngine->setViewVars($this->viewVars);
         $out = $objRenderEngine->render();
         //$out = $objRenderEngine->renderLayout();
 
         return $out;
         if (false !== $action) {
-            $out = $this->_render($this->_getViewFileName($action), $this->viewVars);
+            $out = $this->renderFile($this->getViewFileName($action), $this->viewVars);
         }
 
         if (false !== $out) {
@@ -59,24 +61,9 @@ class View extends App
         return $out;
     }
 
-    public function _render($___viewFn, $___dataForView)
-    {
-        extract($___dataForView, EXTR_SKIP);
-        ob_start();
-
-        include $___viewFn;
-
-        $out = '';
-        $out .= "<!-- Start file: Stored in {$___viewFn} -->\n";
-        $out .= ob_get_clean();
-        $out .= "\n<!-- End file: Stored in {$___viewFn} -->";
-
-        return $out;
-    }
-
     public function renderLayout($content_for_layout, $layout = null)
     {
-        $layoutFileName = $this->_getLayoutFileName($layout);
+        $layoutFileName = $this->getLayoutFileName($layout);
         // if (empty($layoutFileName)) {
         //     return $this->output;
         // }
@@ -93,12 +80,12 @@ class View extends App
             'content_for_layout' => $content_for_layout,
         ]);
 
-        $this->output = $this->_render($layoutFileName, $data_for_layout);
+        $this->output = $this->renderFile($layoutFileName, $data_for_layout);
 
         return $this->output;
     }
 
-    public function _getViewFileName($action = null)
+    private function getViewFileName($action = null)
     {
         $action = Inflector::underscore($action);
         $viewPath = Inflector::camelize($this->viewPath);
@@ -115,7 +102,7 @@ class View extends App
         return $path;
     }
 
-    public function _getLayoutFileName($action = null)
+    private function getLayoutFileName($action = null)
     {
         $action = Inflector::underscore($action);
 
@@ -129,5 +116,20 @@ class View extends App
         $path = (file_exists($pathApp)) ? $pathApp : $pathCore;
 
         return $path;
+    }
+
+    private function renderFile($___viewFn, $___dataForView)
+    {
+        extract($___dataForView, EXTR_SKIP);
+        ob_start();
+
+        include $___viewFn;
+
+        $out = '';
+        $out .= "<!-- Start file: Stored in {$___viewFn} -->\n";
+        $out .= ob_get_clean();
+        $out .= "\n<!-- End file: Stored in {$___viewFn} -->";
+
+        return $out;
     }
 }
