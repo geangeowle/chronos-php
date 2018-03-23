@@ -2,6 +2,7 @@
 
 namespace Chronos\Views\Render;
 
+use Chronos\Chronos;
 use Chronos\Utils\Configure;
 use Chronos\Utils\Inflector;
 use Chronos\Views\BaseRender;
@@ -28,8 +29,22 @@ class RenderDefault implements BaseRender
         pr($this->viewVars);
         pr($this->params);
 
-        $viewPath = Inflector::camelize($this->params['url']['controller']);
-        $action = $viewPath.'/'.Inflector::underscore($this->params['url']['action']);
+        if (Chronos::CAMELCASE === Configure::read('App.View.Folder')) {
+            $viewPath = Inflector::camelize($this->params['url']['controller']);
+        }
+        if (Chronos::UNDERSCORE === Configure::read('App.View.Folder')) {
+            $viewPath = Inflector::underscore($this->params['url']['controller']);
+        }
+
+        $fileName = '';
+        if (Chronos::CAMELCASE === Configure::read('App.View.File')) {
+            $fileName = Inflector::camelize($this->params['url']['action']);
+        }
+        if (Chronos::UNDERSCORE === Configure::read('App.View.File')) {
+            $fileName = Inflector::underscore($this->params['url']['action']);
+        }
+
+        $action = $viewPath.'/'.$fileName;
         $pathApp = Configure::read('App.Path');
         $pathCore = Configure::read('Chronos.Path');
         $pathViewFile = '/Views/'; //.$viewPath.'/'; //.$action.'.php';

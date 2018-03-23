@@ -10,6 +10,9 @@ require_once 'functions.php';
 
 final class Chronos extends BaseObject
 {
+    const CAMELCASE = 1;
+    const UNDERSCORE = 2;
+
     public function run()
     {
         $objDispatcher = new Dispatcher();
