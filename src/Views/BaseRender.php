@@ -9,4 +9,6 @@ interface BaseRender
     public function setViewVars($viewVars);
 
     public function setParams($params);
+
+    public function setLayout($layout);
 }

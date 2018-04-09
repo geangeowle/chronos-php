@@ -6,6 +6,7 @@ class Engine
 {
     private $viewVars = [];
     private $params = [];
+    private $layout = '';
     private $objRender;
 
     public function __construct(BaseRender $render)
@@ -24,11 +25,17 @@ class Engine
         $this->params = $params;
     }
 
+    public function setLayout($layout)
+    {
+        $this->layout = $layout;
+    }
+
     public function render()
     {
         $out = '';
         $this->objRender->setParams($this->params);
         $this->objRender->setViewVars($this->viewVars);
+        $this->objRender->setLayout($this->layout);
         $out = $this->objRender->render();
 
         return $out;

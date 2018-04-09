@@ -2,7 +2,9 @@
 
 namespace Chronos\Views\Render;
 
+use Chronos\Chronos;
 use Chronos\Utils\Configure;
+use Chronos\Utils\Inflector;
 use Chronos\Views\BaseRender;
 use Chronos\Views\Form;
 
@@ -10,6 +12,7 @@ class RenderTwig implements BaseRender
 {
     private $params = [];
     private $viewVars = [];
+    private $layout = '';
 
     public function setViewVars($viewVars)
     {
@@ -21,22 +24,36 @@ class RenderTwig implements BaseRender
         $this->params = $params;
     }
 
+    public function setLayout($layout)
+    {
+        $this->layout = $layout;
+    }
+
     public function render()
     {
-        $this->viewVars['title'] = 'ChronosPHP';
-        pr($this->viewVars);
+        $namespace = Inflector::camelize($this->params['url']['namespace']);
+        if (Chronos::CAMELCASE === Configure::read($namespace.'.View.Folder')) {
+            $viewPath = Inflector::camelize($this->params['url']['controller']);
+        }
+        if (Chronos::UNDERSCORE === Configure::read($namespace.'.View.Folder')) {
+            $viewPath = Inflector::underscore($this->params['url']['controller']);
+        }
 
-        $viewPath = 'Page';
-        $action = 'Page/index';
+        $fileName = '';
+        if (Chronos::CAMELCASE === Configure::read($namespace.'.View.File')) {
+            $fileName = Inflector::camelize($this->params['url']['action']);
+        }
+        if (Chronos::UNDERSCORE === Configure::read($namespace.'.View.File')) {
+            $fileName = Inflector::underscore($this->params['url']['action']);
+        }
 
-        $pathApp = Configure::read('App.Path');
+        $action = $viewPath.'/'.$fileName;
+        $pathApp = Configure::read($namespace.'.Path');
         $pathCore = Configure::read('Chronos.Path');
         $pathViewFile = '/Views/'; //.$viewPath.'/'; //.$action.'.php';
 
         $pathApp = $pathApp.$pathViewFile;
         $pathCore = $pathCore.$pathViewFile;
-
-        $path = (file_exists($pathApp)) ? $pathApp : $pathCore;
 
         $loader = new \Twig_Loader_Filesystem([$pathCore, $pathApp]);
         $twig = new \Twig_Environment($loader, ['debug' => true]);
