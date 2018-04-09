@@ -21,9 +21,12 @@
     ],
     "autoload": {
       "psr-4": {
-        "Chronos\\": "src",
-        "App\\": "app"
-      }
+        "Chronos\\": "src"
+      },
+      "files": [
+        "src/requirements.php",
+        "src/functions.php"
+      ]
     },
     "autoload-dev": {
       "psr-4": {
