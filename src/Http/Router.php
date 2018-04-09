@@ -2,14 +2,24 @@
 
 namespace Chronos\Http;
 
+use Chronos\Utils\Configure;
+use Chronos\Utils\Inflector;
+
 final class Router
 {
-    public static function parse($url)
+    public static function parse($url, $parseNamespace = true)
     {
+        $dsNamespaceDefault = 'chronos';
+        $dsNamespaceAllow = [$dsNamespaceDefault, 'appAdmin', 'legacy'];
+        if (!empty(Configure::read('Default.Namespace'))) {
+            $dsNamespaceDefault = Configure::read('Default.Namespace');
+            $dsNamespaceAllow[] = $dsNamespaceDefault;
+        }
+
         $returnDefault = [
             'url' => [
                 'path' => 'controller',
-                'namespace' => 'app',
+                'namespace' => $dsNamespaceDefault,
                 'controller' => 'page',
                 'action' => 'index',
                 'params' => [],
@@ -24,25 +34,51 @@ final class Router
         }
 
         if (!empty($url)) {
+            // pr($url);
             $list = explode('/', $url);
+            unset($list[0]);
+            // pr($list);
 
-            //$returnDefault['url']['namespace'] = $list[1];
-            $returnDefault['url']['controller'] = $list[1];
-            $returnDefault['url']['path'] = 'app';
-            unset($list[0], $list[1]);
-
-            if (isset($list[2]) && !empty($list[2])) {
-                $returnDefault['url']['action'] = $list[2];
-                unset($list[2]);
+            if (!isset($list[2])) {
+                $list[2] = $returnDefault['url']['action'];
             }
 
-            foreach ($list as $key => $vl) {
+            if (!isset($list[3])) {
+                $list[3] = '';
+            }
+
+            $dsNamespace = $list[1];
+            $dsController = $list[2];
+            $dsMethod = $list[3];
+            $dsParams = [];
+
+            if ($parseNamespace && !in_array($dsNamespace, $dsNamespaceAllow, true)) {
+                $dsNamespace = $dsNamespaceDefault;
+                $dsController = $list[1];
+                $dsMethod = $list[2];
+                unset($list[1], $list[2]);
+            } else {
+                unset($list[1], $list[2], $list[3]);
+            }
+
+            $dsParams = array_merge($list);
+
+            $returnDefault['url']['path'] = Inflector::underscore($dsNamespace);
+            $returnDefault['url']['namespace'] = $dsNamespace;
+            $returnDefault['url']['controller'] = $dsController;
+
+            if (!empty($dsMethod)) {
+                $returnDefault['url']['action'] = $dsMethod;
+            }
+
+            foreach ($dsParams as $key => $vl) {
                 if (!empty($vl)) {
                     $returnDefault['url']['params'][] = $vl;
                 }
             }
         }
 
+        // pr($returnDefault); die();
         return $returnDefault;
     }
 }

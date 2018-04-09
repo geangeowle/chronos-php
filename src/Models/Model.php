@@ -6,6 +6,7 @@ use Chronos\Base\App;
 
 class Model extends App
 {
+    public $namespace = 'chronos';
     protected $name = '';
 
     protected $useTable = '';
@@ -145,7 +146,7 @@ class Model extends App
     private function getConnectionResource()
     {
         if (null === $this->connectionManager) {
-            $this->connectionManager = new ConnectionManager($this->useDbConfig);
+            $this->connectionManager = new ConnectionManager($this->useDbConfig, $this->namespace);
         }
         $connectionManagerDataSource = $this->connectionManager->getConnection($this->useDbConfig);
 

@@ -30,29 +30,23 @@ final class Dispatcher extends App
     private function getControllerFile($params)
     {
         $name = $params['url']['controller'];
-        $this->import('Controller', $name);
+        $namespace = $params['url']['namespace'];
+
+        $this->import('Controller', $name, $namespace);
 
         return Inflector::camelize($name.'_controller');
     }
 
     private function getControllerInstance()
     {
-        //pr($this->params);
         $ctrlClassName = $this->getControllerFile($this->params);
         $dsNamespace = Inflector::camelize($this->params['url']['namespace']);
         $ctrlClass = "{$dsNamespace}\\Controllers\\{$ctrlClassName}";
-        //pr($ctrlClass);
-        // if ('App\\Controllers\\ErrorController' === $ctrlClass) {
-        //     $ctrlClass = 'Chronos\\Controllers\\'.$ctrlClassName;
-        // }
+
         if (!class_exists($ctrlClass)) {
-            //$this->redirect("http://localhost:8056/public/?url=error/missingClass/{$ctrlClassName}");
-            // $this->url = '/error/missingClass/'.$ctrlClassName;
-            // $this->params = Router::parse($this->url);
-            echo '<pre>';
-            print_r($this->params);
-            die('!class_exists -> '.$ctrlClassName);
-            // $ctrlClass = 'Chronos\\Controllers\\'.$this->__loadController($this->params);
+            $this->url = '/error/missingClass/'.$ctrlClassName.'/'.$ctrlClass;
+            $this->params = Router::parse($this->url);
+            $ctrlClass = 'Chronos\\Controllers\\'.$this->getControllerFile($this->params);
         }
         $objController = new $ctrlClass();
 

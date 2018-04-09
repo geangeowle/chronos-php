@@ -9,12 +9,14 @@ class ConnectionManager
 {
     private $config;
     private $useDbConfig;
+    private $namespace;
     private $dataSources = [];
     private $connectionsPaths = [];
 
-    public function __construct($useDbConfig)
+    public function __construct($useDbConfig, $namespace)
     {
         $this->useDbConfig = $useDbConfig;
+        $this->namespace = Inflector::camelize($namespace);
         $this->setDatabaseConfig();
     }
 
@@ -25,8 +27,8 @@ class ConnectionManager
 
     private function setDatabaseConfig()
     {
-        $pathApp = Configure::read('App.Path');
-        $pathFile = $pathApp.Configure::read('App.Database');
+        $pathApp = Configure::read($this->namespace.'.Path');
+        $pathFile = $pathApp.Configure::read($this->namespace.'.Database');
         $this->config = require $pathFile;
 
         $this->parseDatabaseConfig();
