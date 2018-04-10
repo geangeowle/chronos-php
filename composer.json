@@ -25,7 +25,8 @@
       },
       "files": [
         "src/requirements.php",
-        "src/functions.php"
+        "src/functions.php",
+        "src/Config/boot.php"
       ]
     },
     "autoload-dev": {
