@@ -10,7 +10,8 @@ final class Router
     public static function parse($url, $parseNamespace = true)
     {
         $dsNamespaceDefault = 'chronos';
-        $dsNamespaceAllow = [$dsNamespaceDefault, 'appAdmin', 'legacy'];
+        $dsNamespaceAllow = Configure::read('Default.NamespaceAllow');
+
         if (!empty(Configure::read('Default.Namespace'))) {
             $dsNamespaceDefault = Configure::read('Default.Namespace');
             $dsNamespaceAllow[] = $dsNamespaceDefault;
@@ -52,7 +53,7 @@ final class Router
             $dsMethod = $list[3];
             $dsParams = [];
 
-            if ($parseNamespace && !in_array($dsNamespace, $dsNamespaceAllow, true)) {
+            if ($parseNamespace && !in_array(Inflector::camelize($dsNamespace), $dsNamespaceAllow, true)) {
                 $dsNamespace = $dsNamespaceDefault;
                 $dsController = $list[1];
                 $dsMethod = $list[2];

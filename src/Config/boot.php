@@ -10,3 +10,4 @@ Configure::write('Chronos.View.File', Chronos::UNDERSCORE);
 
 Configure::write('Default.Namespace', 'Chronos');
 Configure::write('Default.Path', 'src');
+Configure::write('Default.NamespaceAllow', []);
