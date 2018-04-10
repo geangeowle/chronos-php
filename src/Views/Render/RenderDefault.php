@@ -47,6 +47,10 @@ class RenderDefault implements BaseRender
             $fileName = Inflector::underscore($this->params['url']['action']);
         }
 
+        if (empty(Configure::read($namespace.'.Path'))) {
+            trigger_error('Missing settings on Configure::read(\''.$namespace.'\').'.PHP_EOL, E_USER_ERROR);
+        }
+
         $action = $viewPath.'/'.$fileName;
         $pathApp = Configure::read($namespace.'.Path');
         $pathCore = Configure::read('Chronos.Path');
