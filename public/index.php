@@ -8,6 +8,4 @@
 
     use Chronos\Chronos;
 
-    //require_once dirname(__DIR__).'/src/Config/boot.php';
-
     (new Chronos())->run();
