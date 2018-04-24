@@ -1,6 +1,7 @@
 #.gitignore
 .php_cs
 phpunit.xml
+docker-compose.yml
 composer.lock
 package-lock.json
 build/
