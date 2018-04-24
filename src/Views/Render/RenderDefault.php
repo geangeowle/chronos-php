@@ -13,6 +13,7 @@ class RenderDefault implements BaseRender
     private $params = [];
     private $viewVars = [];
     private $layout = '';
+    private $showPathFile = false;
 
     public function setViewVars($viewVars)
     {
@@ -70,9 +71,13 @@ class RenderDefault implements BaseRender
         require $path;
 
         $out = '';
-        $out .= "<!-- [File] - Start file: Stored in {$path} -->\n";
+        if ($this->showPathFile) {
+            $out .= "<!-- [File] - Start file: Stored in {$path} -->\n";
+        }
         $out .= ob_get_clean();
-        $out .= "\n<!-- [File] - End file: Stored in {$path} -->";
+        if ($this->showPathFile) {
+            $out .= "\n<!-- [File] - End file: Stored in {$path} -->";
+        }
 
         return $this->renderLayout($out);
     }
@@ -106,9 +111,13 @@ class RenderDefault implements BaseRender
         require $path;
 
         $out = '';
-        $out .= "<!-- [Layout] - Start file: Stored in {$path} -->\n";
+        if ($this->showPathFile) {
+            $out .= "<!-- [Layout] - Start file: Stored in {$path} -->\n";
+        }
         $out .= ob_get_clean();
-        $out .= "\n<!-- [Layout] - End file: Stored in {$path} -->";
+        if ($this->showPathFile) {
+            $out .= "\n<!-- [Layout] - End file: Stored in {$path} -->";
+        }
 
         return $out;
     }
