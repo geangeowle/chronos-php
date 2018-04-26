@@ -138,6 +138,11 @@ class Model extends App
         return $this->lastQuery;
     }
 
+    public function getLastInsertedId()
+    {
+        return $this->getConnectionResource()->getLastInsertedId();
+    }
+
     private function fetch()
     {
         return $this->getConnectionResource()->fetch();

@@ -73,4 +73,16 @@ class DboSqlite extends DataSource
 
         return $return;
     }
+
+    public function getLastInsertedId()
+    {
+        $this->query('SELECT last_insert_rowid() AS last_insert_rowid;');
+        $returnResult = $this->fetch();
+
+        if (!empty($returnResult)) {
+            return (int) $returnResult[0]['last_insert_rowid'];
+        }
+
+        return 0;
+    }
 }

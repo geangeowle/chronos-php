@@ -32,6 +32,8 @@ abstract class DataSource
 
     abstract public function fetch();
 
+    abstract public function getLastInsertedId();
+
     public function getConnected()
     {
         return $this->connected;
