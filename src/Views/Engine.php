@@ -7,6 +7,7 @@ class Engine
     private $viewVars = [];
     private $params = [];
     private $layout = '';
+    private $viewPath = '';
     private $objRender;
 
     public function __construct(BaseRender $render)
@@ -30,12 +31,18 @@ class Engine
         $this->layout = $layout;
     }
 
+    public function setViewPath($viewPath)
+    {
+        $this->viewPath = $viewPath;
+    }
+
     public function render()
     {
         $out = '';
         $this->objRender->setParams($this->params);
         $this->objRender->setViewVars($this->viewVars);
         $this->objRender->setLayout($this->layout);
+        $this->objRender->setViewPath($this->viewPath);
         $out = $this->objRender->render();
 
         return $out;

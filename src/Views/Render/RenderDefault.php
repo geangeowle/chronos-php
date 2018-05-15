@@ -14,10 +14,16 @@ class RenderDefault implements BaseRender
     private $viewVars = [];
     private $layout = '';
     private $showPathFile = false;
+    private $viewPath = '';
 
     public function setViewVars($viewVars)
     {
         $this->viewVars = $viewVars;
+    }
+
+    public function setViewPath($viewPath)
+    {
+        $this->viewPath = $viewPath;
     }
 
     public function setParams($params)
@@ -33,11 +39,12 @@ class RenderDefault implements BaseRender
     public function render()
     {
         $namespace = Inflector::camelize($this->params['url']['namespace']);
+
         if (Chronos::CAMELCASE === Configure::read($namespace.'.View.Folder')) {
-            $viewPath = Inflector::camelize($this->params['url']['controller']);
+            $viewPath = Inflector::camelize($this->viewPath);
         }
         if (Chronos::UNDERSCORE === Configure::read($namespace.'.View.Folder')) {
-            $viewPath = Inflector::underscore($this->params['url']['controller']);
+            $viewPath = Inflector::underscore($this->viewPath);
         }
 
         $fileName = '';

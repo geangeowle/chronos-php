@@ -9,16 +9,16 @@ class Controller extends App
 {
     public $name = '';
     public $pageTitle = '';
-    public $viewPath;
     public $viewVars = [];
     public $output;
     protected $params = [];
     private $layout = 'default';
+    private $viewPath = 'page';
 
     public function __construct()
     {
-        if (null === $this->viewPath) {
-            $this->viewPath = Inflector::underscore($this->name);
+        if (null === $this->getViewPath()) {
+            $this->setViewPath(Inflector::underscore($this->name));
         }
     }
 
@@ -30,6 +30,16 @@ class Controller extends App
     public function getLayout()
     {
         return $this->layout;
+    }
+
+    public function setViewPath($newViewPath)
+    {
+        $this->viewPath = $newViewPath;
+    }
+
+    public function getViewPath()
+    {
+        return $this->viewPath;
     }
 
     public function render($action = null, $layout = null, $file = null)

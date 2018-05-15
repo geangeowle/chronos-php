@@ -9,10 +9,10 @@ use Chronos\Utils\Inflector;
 class View extends App
 {
     public $autoLayout = true;
-    public $viewPath;
     public $viewVars = [];
     public $pageTitle = '';
     private $layout = 'default';
+    private $viewPath = '';
     private $output;
     private $renderEngine = 'default';
 
@@ -20,19 +20,24 @@ class View extends App
     {
         if (is_object($controller)) {
             $params = $controller->getParams();
-            $this->viewPath = $controller->viewPath;
             $this->viewVars = $controller->viewVars;
             $this->layout = $controller->getLayout();
             $this->action = Inflector::underscore($params['url']['action']);
             $this->params = $params;
             $this->pageTitle = $controller->pageTitle;
             $this->setLayout($controller->getLayout());
+            $this->setViewPath($controller->getViewPath());
         }
     }
 
     public function setLayout($newLayout)
     {
         $this->layout = $newLayout;
+    }
+
+    public function setViewPath($newViewPath)
+    {
+        $this->viewPath = $newViewPath;
     }
 
     public function render($action = null)
@@ -53,6 +58,7 @@ class View extends App
         $objRenderEngine->setParams($this->params);
         $objRenderEngine->setViewVars($this->viewVars);
         $objRenderEngine->setLayout($this->layout);
+        $objRenderEngine->setViewPath($this->viewPath);
         $out = $objRenderEngine->render();
         //$out = $objRenderEngine->renderLayout();
 
