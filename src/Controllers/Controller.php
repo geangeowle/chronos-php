@@ -17,7 +17,7 @@ class Controller extends App
 
     public function __construct()
     {
-        if (null === $this->getViewPath()) {
+        if ('page' === $this->getViewPath()) {
             $this->setViewPath(Inflector::underscore($this->name));
         }
     }
