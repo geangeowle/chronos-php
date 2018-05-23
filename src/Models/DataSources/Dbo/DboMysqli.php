@@ -33,7 +33,7 @@ class DboMysqli extends DataSource
     public function connect()
     {
         try {
-            $this->connResource = mysqli_connect($this->config['host'], $this->config['user'], $this->config['pass']);
+            $this->connResource = mysqli_connect($this->config['host'], $this->config['user'], $this->config['pass'], $this->config['port']);
             mysqli_select_db($this->connResource, $this->config['database']);
             //mysqli_query($this->connResource, "SET NAMES 'utf8'");
 
