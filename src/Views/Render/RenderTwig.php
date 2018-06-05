@@ -19,6 +19,11 @@ class RenderTwig implements BaseRender
         $this->viewVars = $viewVars;
     }
 
+    public function setViewPath($viewPath)
+    {
+        $this->viewPath = $viewPath;
+    }
+
     public function setParams($params)
     {
         $this->params = $params;
