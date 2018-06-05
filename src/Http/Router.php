@@ -40,8 +40,8 @@ final class Router
             unset($list[0]);
             // pr($list);
 
-            if (!isset($list[2])) {
-                $list[2] = $returnDefault['url']['action'];
+            if (empty($list[2])) {
+                $list[2] = $returnDefault['url']['controller'];
             }
 
             if (!isset($list[3])) {
