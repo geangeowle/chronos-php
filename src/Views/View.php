@@ -11,6 +11,8 @@ class View extends App
     public $autoLayout = true;
     public $viewVars = [];
     public $pageTitle = '';
+    protected $controller;
+    protected $action;
     private $layout = 'default';
     private $viewPath = '';
     private $output;
@@ -22,6 +24,7 @@ class View extends App
             $params = $controller->getParams();
             $this->viewVars = $controller->viewVars;
             $this->layout = $controller->getLayout();
+            $this->controller = $controller;
             $this->action = Inflector::underscore($params['url']['action']);
             $this->params = $params;
             $this->pageTitle = $controller->pageTitle;
@@ -52,9 +55,10 @@ class View extends App
             $dsClassRender = Configure::read($namespace.'.RenderEngine');
         }
 
-        $dsRender = '\\Chronos\\Views\\Render\\Render'.$dsClassRender;
+        $engine = '\\Chronos\\Views\\Render\\Render'.$dsClassRender;
+        $renderEngine = new $engine($this->controller, $this->action);
 
-        $objRenderEngine = new Engine(new $dsRender());
+        $objRenderEngine = new Engine($renderEngine);
         $objRenderEngine->setParams($this->params);
         $objRenderEngine->setViewVars($this->viewVars);
         $objRenderEngine->setLayout($this->layout);
