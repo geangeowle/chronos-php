@@ -77,4 +77,15 @@ class Session
 
         return false;
     }
+
+    public static function get($name)
+    {
+        $session = null;
+        if (static::check($name)) {
+            $session = $_SESSION[$name];
+            unset($_SESSION[$name]);
+        }
+
+        return $session;
+    }
 }
