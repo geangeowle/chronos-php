@@ -61,6 +61,10 @@ class Model extends App
         $result = $this->executeQuery($querySQL);
         $result = $this->fetch();
 
+        if ('first' === $type) {
+            $result = isset($result[0]) ? $result[0] : [];
+        }
+
         return $result;
     }
 
