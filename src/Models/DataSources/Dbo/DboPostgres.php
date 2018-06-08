@@ -37,9 +37,9 @@ class DboPostgres extends DataSource
             $conn .= "user='{$this->config['user']}' password='{$this->config['pass']}'";
 
             // if(!$config['persistent']){
-            // 	$this->connResource = pg_connect($conn, PGSQL_CONNECT_FORCE_NEW);
+            $this->connResource = pg_connect($conn, PGSQL_CONNECT_FORCE_NEW);
             // } else {
-            $this->connResource = pg_pconnect($conn);
+            // $this->connResource = pg_pconnect($conn);
             // }
             // $this->connected = false;
 
