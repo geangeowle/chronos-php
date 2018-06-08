@@ -155,7 +155,8 @@ class Model extends App
     private function getConnectionResource()
     {
         if (null === $this->connectionManager) {
-            $this->connectionManager = new ConnectionManager($this->useDbConfig, $this->namespace);
+            $this->connectionManager = ConnectionManager::getInstance();
+            $this->connectionManager->setConfig($this->useDbConfig, $this->namespace);
         }
         $connectionManagerDataSource = $this->connectionManager->getConnection($this->useDbConfig);
 
