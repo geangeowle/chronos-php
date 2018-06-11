@@ -13,7 +13,18 @@ class ConnectionManager
     private $dataSources = [];
     private $connectionsPaths = [];
 
-    public function __construct($useDbConfig, $namespace)
+    private static $instance = null;
+
+    public static function getInstance()
+    {
+        if (null === static::$instance) {
+            static::$instance = new static();
+        }
+
+        return static::$instance;
+    }
+
+    public function setConfig($useDbConfig, $namespace)
     {
         $this->useDbConfig = $useDbConfig;
         $this->namespace = Inflector::camelize($namespace);
@@ -36,14 +47,15 @@ class ConnectionManager
 
     private function parseDatabaseConfig()
     {
-        if (!isset($this->dataSources[$this->useDbConfig])) {
-            foreach ($this->config as $configName => $config) {
-                $this->connectionsPaths[$configName] = $this->getConfigPaths($config);
+        $_this = static::getInstance();
+        if (!isset($_this->dataSources[$_this->useDbConfig])) {
+            foreach ($_this->config as $configName => $config) {
+                $_this->connectionsPaths[$configName] = $_this->getConfigPaths($config);
 
-                $_namespace = $this->connectionsPaths[$configName]['namespace'];
-                $this->dataSources[$configName] = new $_namespace();
-                $this->dataSources[$configName]->setConfig($config);
-                $this->dataSources[$configName]->connect();
+                $_namespace = $_this->connectionsPaths[$configName]['namespace'];
+                $_this->dataSources[$configName] = new $_namespace();
+                $_this->dataSources[$configName]->setConfig($config);
+                $_this->dataSources[$configName]->connect();
             }
         }
     }
