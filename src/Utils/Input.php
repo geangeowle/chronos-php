@@ -123,10 +123,14 @@ class Input
     private static function pull($key, $array, \Closure $change = null)
     {
         if ($key instanceof \Closure) {
-            return static::arrayPull('', static::change($array, $key));
+            return static::arrayPull(null, static::change($array, $key));
         }
 
-        return static::arrayPull($key, static::change($array, $change));
+        if ($change instanceof \Closure) {
+            return static::arrayPull(null, static::change($array, $change));
+        }
+
+        return static::arrayPull($key, $array);
     }
 
     /**
@@ -138,12 +142,14 @@ class Input
     private static function change($array, \Closure $change = null)
     {
         if (null !== $change && ($change instanceof \Closure)) {
-            $array = $change($array);
-        } elseif (null !== $change && !($change instanceof \Closure)) {
+            return $change($array);
+        }
+
+        if (null !== $change && !($change instanceof \Closure)) {
             throw new \InvalidArgumentException('Second argument should be an instance "\Closure"');
         }
 
-        return $array;
+        return [];
     }
 
     /**
