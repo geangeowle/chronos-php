@@ -60,6 +60,6 @@ class App extends BaseObject
 
     public function redirect($url)
     {
-        header('Location: '.$url);
+        exit(header('Location: '.$url));
     }
 }
