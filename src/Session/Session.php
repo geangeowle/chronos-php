@@ -69,6 +69,13 @@ class Session
         }
     }
 
+    public static function remove($name)
+    {
+        if (self::check($name)) {
+            unset($_SESSION[$name]);
+        }
+    }
+
     public static function check($name)
     {
         if (null !== self::read($name)) {
