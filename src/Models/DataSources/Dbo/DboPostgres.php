@@ -49,7 +49,7 @@ class DboPostgres extends DataSource
             $this->query("SET datestyle TO 'ISO, DMY';");
             $this->query('SET search_path TO '.$this->config['schema'].';');
 
-            if (!empty($config['encoding'])) {
+            if (!empty($this->config['encoding'])) {
                 $this->setEncoding($this->config['encoding']);
             }
 
