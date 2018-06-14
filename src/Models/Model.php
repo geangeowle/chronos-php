@@ -136,12 +136,14 @@ class Model extends App
         }
 
         foreach ($data as $k => $valor) {
-            if (is_string($valor)) {
-                $data[$k] = "'{$valor}'";
+            if (is_numeric($valor)) {
+                $data[$k] = $valor;
             } elseif (null === $valor) {
                 $data[$k] = 'NULL';
             } elseif (is_bool($valor)) {
                 $data[$k] = ($valor) ? 1 : 0;
+            } else {
+                $data[$k] = "'{$valor}'";
             }
         }
 

@@ -62,13 +62,20 @@ class DboPostgres extends DataSource
     public function disconnect()
     {
         if (null !== $this->connResource) {
+            @pg_free_result($this->results);
             @pg_close($this->connResource);
         }
     }
 
     public function query($querySql)
     {
-        $this->results = @pg_query($this->connResource, $querySql);
+        if ($result = @pg_query($this->connResource, $querySql)) {
+            $this->results = $result;
+        } else {
+            $errors = \SqlFormatter::format($querySql).'<br />';
+            $errors .= pg_last_error($this->connResource).'<br />';
+            exit($errors);
+        }
     }
 
     public function fetch()
