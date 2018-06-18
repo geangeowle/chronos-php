@@ -138,7 +138,7 @@ class Model extends App
         foreach ($data as $k => $valor) {
             if (is_numeric($valor)) {
                 $data[$k] = $valor;
-            } elseif (null === $valor) {
+            } elseif (null === $valor || 0 === strlen(trim($valor))) {
                 $data[$k] = 'NULL';
             } elseif (is_bool($valor)) {
                 $data[$k] = ($valor) ? 1 : 0;
@@ -201,6 +201,11 @@ class Model extends App
     public function getLastInsertedId()
     {
         return $this->getConnectionResource()->getLastInsertedId();
+    }
+
+    public function setUseDbConfig($configString)
+    {
+        $this->useDbConfig = $configString;
     }
 
     private function fetch()
