@@ -20,22 +20,24 @@
         }
     ],
     "autoload": {
-      "psr-4": {
-        "Chronos\\": "src"
-      },
-      "files": [
-        "src/requirements.php",
-        "src/functions.php",
-        "src/Config/boot.php"
-      ]
+        "psr-4": {
+            "Chronos\\": "src"
+        },
+        "files": [
+            "src/requirements.php",
+            "src/functions.php",
+            "src/Config/boot.php",
+            "vendor/jdorn/sql-formatter/lib/SqlFormatter.php"
+        ]
     },
     "autoload-dev": {
-      "psr-4": {
-          "Chronos\\Test\\": "tests"
-      }
+        "psr-4": {
+            "Chronos\\Test\\": "tests"
+        }
     },
     "require": {
-        "php": ">=5.6"
+        "php": ">=5.6",
+        "jdorn/sql-formatter": "dev-master"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.5",
