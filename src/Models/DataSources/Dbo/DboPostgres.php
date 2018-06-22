@@ -71,11 +71,13 @@ class DboPostgres extends DataSource
     {
         if ($result = @pg_query($this->connResource, $querySql)) {
             $this->results = $result;
-        } else {
-            $errors = \SqlFormatter::format($querySql).'<br />';
-            $errors .= pg_last_error($this->connResource).'<br />';
-            exit($errors);
+
+            return $this->results;
         }
+
+        $errors = \SqlFormatter::format($querySql).'<br />';
+        $errors .= pg_last_error($this->connResource).'<br />';
+        exit($errors);
     }
 
     public function fetch()
@@ -96,7 +98,8 @@ class DboPostgres extends DataSource
 
     public function getLastInsertedId()
     {
-        $last_id = 0; //($this->connResource);
+        $row = @pg_fetch_row($this->results);
+        $last_id = !empty($row[0]) ? $row[0] : 0;
 
         return (int) $last_id;
     }
