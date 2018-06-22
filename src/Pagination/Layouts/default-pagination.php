@@ -22,5 +22,7 @@
         </li>
     <?php } ?>
     </ul>
-    <p class="pull-left remaining">mostrando <?php echo $currentNumRecords; ?> de <?php echo $totalRecords; ?> registros</p>
+    <?php if (count($numbers) > 0) { ?>
+        <p class="pull-left remaining">mostrando <?php echo $currentNumRecords; ?> de <?php echo $totalRecords; ?> registros</p>
+    <?php } ?>
 </div>
