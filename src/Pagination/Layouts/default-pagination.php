@@ -1,4 +1,4 @@
-<div class="pagination-box-layout">
+<div class="pagination-box-layout clearfix">
     <ul class="pagination pagination-sm no-margin pull-left">
     <?php if($currentPage > 1) { ?>
         <li>

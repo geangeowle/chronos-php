@@ -3,6 +3,7 @@
 namespace Chronos\Views\Render;
 
 use Chronos\Session\Session;
+use Chronos\Utils\Cookie;
 use Chronos\Utils\Input;
 use Chronos\Views\BaseRender;
 use Chronos\Views\Form;
@@ -25,6 +26,7 @@ class RenderTwig extends Render implements BaseRender
         $twig->addGlobal('Form', new Form());
         $twig->addGlobal('Input', new Input());
         $twig->addGlobal('Session', new Session());
+        $twig->addGlobal('Cookie', new Cookie());
 
         return $twig->render($renderAction, $this->viewVars);
     }
