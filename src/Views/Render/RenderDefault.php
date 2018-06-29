@@ -2,6 +2,9 @@
 
 namespace Chronos\Views\Render;
 
+use Chronos\Session\Session;
+use Chronos\Utils\Cookie;
+use Chronos\Utils\Input;
 use Chronos\Views\BaseRender;
 use Chronos\Views\Form;
 
@@ -28,6 +31,9 @@ class RenderDefault extends Render implements BaseRender
         ob_start();
 
         $Form = new Form();
+        $Session = new Session();
+        $Cookie = new Cookie();
+        $Input = new Input();
 
         require $path;
 
@@ -55,6 +61,9 @@ class RenderDefault extends Render implements BaseRender
         ob_start();
 
         $Form = new Form();
+        $Session = new Session();
+        $Cookie = new Cookie();
+        $Input = new Input();
 
         require $path;
 
