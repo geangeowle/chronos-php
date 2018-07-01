@@ -23,6 +23,6 @@
     <?php } ?>
     </ul>
     <?php if (count($numbers) > 0) { ?>
-        <p class="pull-left remaining">mostrando <?php echo $currentNumRecords; ?> de <?php echo $totalRecords; ?> registros</p>
+        <p class="pull-left remaining"><?php echo $totalRecords; ?> cadastro(s), <?php echo $totalPages; ?> pagina(s)</p>
     <?php } ?>
 </div>
