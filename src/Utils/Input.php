@@ -12,14 +12,14 @@ class Input
      *
      * @var array
      */
-    private static $array = [];
+    protected static $array = [];
 
     /**
      * An array containing values of indices that should be ignored from returning.
      *
      * @var array
      */
-    private static $but = [];
+    protected static $but = [];
 
     /**
      * Pass value to "static::$array", the first parameter "$key" accepts an array key
