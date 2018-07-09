@@ -36,6 +36,7 @@ class Model extends App
         $optionsDefault = [
             'conditions' => [],
             'fields' => [],
+            'group' => [],
             'order' => [],
             'limit' => -1,
         ];
@@ -61,6 +62,10 @@ class Model extends App
             implode('', $this->buildBelongsTo()),
             implode(' AND ', $options['conditions'])
         );
+
+        if (!empty($options['group'])) {
+            $querySQL .= sprintf('GROUP BY %s ', implode(', ', $options['group']));
+        }
 
         if (!empty($options['order'])) {
             $querySQL .= sprintf('ORDER BY %s ', implode(', ', $options['order']));
