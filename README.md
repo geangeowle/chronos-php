@@ -1,4 +1,4 @@
-# ChronosPHP
+# chronos-php
 Very Small Lite Framework for PHP
 
 [![Build Status](https://travis-ci.org/geangeowle/chronos-php.svg?branch=master)](https://travis-ci.org/geangeowle/chronos-php)
