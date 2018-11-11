@@ -1,10 +1,4 @@
 #.gitignore
-.php_cs
-phpunit.xml
-docker-compose.yml
-composer.lock
-package-lock.json
-build/
-db/
-node_modules/
-vendor/
+
+/vendor/
+/node_modules/
