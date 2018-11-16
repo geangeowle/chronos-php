@@ -80,7 +80,7 @@ class Pagination implements PaginationInterface
     }
 
     /** {@inheritdoc} */
-    public function setCurrentPage(int $currentPage)
+    public function setCurrentPage($currentPage)
     {
         $this->currentPage = $currentPage;
 
@@ -94,7 +94,7 @@ class Pagination implements PaginationInterface
     }
 
     /** {@inheritdoc} */
-    public function setPerPage(int $perPage)
+    public function setPerPage($perPage)
     {
         $this->perPage = $perPage;
 
@@ -127,7 +127,7 @@ class Pagination implements PaginationInterface
     }
 
     /** {@inheritdoc} */
-    public function setPgNumToShow(int $pgNumToShow)
+    public function setPgNumToShow($pgNumToShow)
     {
         $this->pgNumToShow = $pgNumToShow;
     }
@@ -192,7 +192,7 @@ class Pagination implements PaginationInterface
     }
 
     /** {@inheritdoc} */
-    public function loadLayout(string $file, array $viewVars = [])
+    public function loadLayout($file, array $viewVars = [])
     {
         $path = __DIR__.self::DS.'Layouts'.self::DS;
         $layout = $path.$file;
