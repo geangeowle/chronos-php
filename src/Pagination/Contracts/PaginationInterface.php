@@ -59,14 +59,14 @@ interface PaginationInterface
      *
      * @param int $currentPage
      */
-    public function setCurrentPage(int $currentPage);
+    public function setCurrentPage($currentPage);
 
     /**
      * Set how many records we want to display per page.
      *
      * @param int $perPage
      */
-    public function setPerPage(int $perPage);
+    public function setPerPage($perPage);
 
     /**
      * Get how many records should be displayed per page.
@@ -96,7 +96,7 @@ interface PaginationInterface
      *
      * @param int $pgNumToShow
      */
-    public function setPgNumToShow(int $pgNumToShow);
+    public function setPgNumToShow($pgNumToShow);
 
     /**
      * The number of pages that should be displayed. This number is based on the
@@ -126,7 +126,7 @@ interface PaginationInterface
      * @param string $file
      * @param array  $viewVars
      */
-    public function loadLayout(string $file, array $viewVars = []);
+    public function loadLayout($file, array $viewVars = []);
 
     /**
      * Returns the current engine object that is being used for generating
